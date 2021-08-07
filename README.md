@@ -17,6 +17,7 @@ Online Ordering Application using a microservices architecture in Java Spring Bo
 - REST
 - microservices
 
+
 ---
 ### Code
 | Java Dependancies |  |
@@ -24,6 +25,26 @@ Online Ordering Application using a microservices architecture in Java Spring Bo
 | [Spring Web](https://mvnrepository.com/artifact/org.springframework/spring-web) | RESTful web apps |
 | [Spring Data JPA](https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa) | allows persistant data as SQL |
 | [H2 Database](https://mvnrepository.com/artifact/com.h2database/h2) | SQL database stored in-memory |
+
+Classes:
+```mermaid
+classDiagram
+    class Customer{
+        +String companyName
+        +String address
+        +String country
+        +someMethod()
+    }
+    class Contact{
+        +String name
+        +String phone
+        +String email
+        +String position
+        -someMethod()
+    }
+    Customer --> "1..*" Contact : has contact
+```
+
 
 ---
 ### Screenshots
