@@ -22,10 +22,10 @@ class LoadDatabase {
                         "1 Apple Park Way, Cupertino, CA 95014",
                         "USA",
                         new Contact(
-                                "Tim Apple",
-                                "123456",
-                                "tim@apple.com",
-                                "CEO"
+                            "Tim Apple",
+                            "123456",
+                            "tim@apple.com",
+                            "CEO"
                         )
                     )
                 )
@@ -33,17 +33,17 @@ class LoadDatabase {
 
             log.info("Preloading " + customerRepository.save(
                     new Customer(
-                            "SpaceX",
-                            "42 Galactic Drive, San Francisco, CA 97468",
-                            "USA",
-                            new Contact(
-                                    "Elon Musk",
-                                    "69420",
-                                    "elon@spacex.com",
-                                    "CEO"
-                            )
+                        "SpaceX",
+                        "42 Galactic Drive, San Francisco, CA 97468",
+                        "USA",
+                        new Contact(
+                            "Elon Musk",
+                            "69420",
+                            "elon@spacex.com",
+                            "CEO"
+                        )
                     )
-                    )
+                )
             );
         };
     }
