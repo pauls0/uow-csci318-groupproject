@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>com.csci318teamone</groupId>
 	<artifactId>customerSystem</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>customerSystem</name>
 	<description>Customer system for an Online Ordering Application</description>
 	<properties>
