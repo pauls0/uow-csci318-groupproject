@@ -216,7 +216,6 @@ curl -X GET http://localhost:8080/customers/1
 ---
 
 ### Architecture 
-"Description of your Spring project structure, including how the packages align with the multi-tier architecture, and the functionality of each Java class"
 
 #### Overall project structure:
 
