@@ -121,7 +121,8 @@ curl -X GET http://localhost:8080/customers/1
 - Add `Google` as a new customer
 ```bash
 curl -X POST -H "Content-Type:application/json" -d \
-'{"companyName":"Google","address":"1600 Amphitheatre Parkway, Mountain View, California", 
+'{"companyName":"Google",
+"address":"1600 Amphitheatre Parkway, Mountain View, California", 
 "country":"USA","contact":{"name": "Test Testerson","phone": "0400000000", 
 "email": "mail@example.com", "position": "CEO"}}' http://localhost:8080/customers
 ```
@@ -194,9 +195,9 @@ curl -X GET http://localhost:8080/customers/1
 ```
 ```bash
 curl -X PUT -H "Content-Type:application/json" -d \
-'{"companyName": "Apple","address": "1 Apple Park Way, Cupertino, CA 95014","country": "USA", 
-"contact": {"id": 2,"name": "Tim Cook","phone": "123456","email": "tim@apple.com", 
-"position": "CEO}}' http://localhost:8080/customers/1
+'{"companyName": "Apple","address": "1 Apple Park Way, Cupertino, CA 95014",
+"country": "USA", "contact": {"id": 2,"name": "Tim Cook","phone": "123456",
+"email": "tim@apple.com", "position": "CEO}}' http://localhost:8080/customers/1
 ```
 ```bash
 curl -X GET http://localhost:8080/customers/1
