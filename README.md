@@ -22,11 +22,12 @@ Online Ordering Application using a microservices architecture in Java Spring Bo
 
 ### Instructions to Build and Run
 
+- The following commands should be executed within each systems respective directory
+- Building compiles a fat jar to `target/<system-name>System-<version>-SNAPSHOT.jar`
+
 Build: `./mvnw compile -f "pom.xml";`
 
-Run: `java -jar customerSystem-1.0.0-SNAPSHOT.jar;`
-
-- Building compiles a fat jar to `target/customerSystem-1.0.0-SNAPSHOT.jar`
+Run: `java -jar <system-name>System-<version>-SNAPSHOT.jar;`
 
 ---
 
