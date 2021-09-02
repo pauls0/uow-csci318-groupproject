@@ -463,26 +463,19 @@ curl -X GET http://localhost:8080/customers/1
   <summary>Mermaid markup</summary>
 
 ```mermaid
-graph LR
-  subgraph Architecture Layers
-    A[API layer]
-    B[Service layer]
-    C[Data Access layer]
-    D[(Database)]
-  end
-  subgraph ProductSystem
-    Class6([ProductController])
-    Class7([ProductService])
-    Class8([ProductRepository])
-    Class9([JpaRepository])
-    Class10[(H2Database)]
-  end
+graph TB
   subgraph CustomerSystem
     Class1([CustomerController])
     Class2([CustomerService])
     Class3([CustomerRepository])
     Class4([JpaRepository])
     Class5[(H2Database)]
+    subgraph Architecture Layers
+        A[API layer]
+        B[Service layer]
+        C[Data Access layer]
+        D[(Database)]
+    end
   end
   A -.->|Equivalent to| Class1
   B -.->|Equivalent to| Class2
@@ -490,10 +483,27 @@ graph LR
   D -.->|Equivalent to| Class5
   Class3 -.->|extends| Class4
   Class4 -.->|interfaces with| Class5
-  A -.->|Equivalent to| Class6
-  B -.->|Equivalent to| Class7
-  C -.->|Equivalent to| Class8
-  D -.->|Equivalent to| Class10
+```
+
+```mermaid
+graph TB
+  subgraph ProductSystem
+    Class6([ProductController])
+    Class7([ProductService])
+    Class8([ProductRepository])
+    Class9([JpaRepository])
+    Class10[(H2Database)]
+    subgraph Architecture Layers
+        A2[API layer]
+        B2[Service layer]
+        C2[Data Access layer]
+        D2[(Database)]
+    end
+  end
+  A2 -.->|Equivalent to| Class6
+  B2 -.->|Equivalent to| Class7
+  C2 -.->|Equivalent to| Class8
+  D2 -.->|Equivalent to| Class10
   Class8 -.->|extends| Class9
   Class9 -.->|interfaces with| Class10
 ```
