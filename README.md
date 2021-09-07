@@ -1,6 +1,7 @@
 # csci318 Project
 
 Online Ordering Application using a microservices architecture in Java Spring Boot.
+.
 
 <img src="https://img.shields.io/badge/Java-Language-blue?logo=java" alt="Java logo" height="25" /> &nbsp;
 <img src="https://img.shields.io/badge/Apache Maven-Dependancy Management-blue?logo=apachemaven" alt="Apache Maven logo" height="25" />&nbsp;
