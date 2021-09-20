@@ -7,6 +7,7 @@ import com.csci318teamone.purchaseSystem.entities.ProductDetail;
 import com.csci318teamone.purchaseSystem.entities.Purchase;
 import com.csci318teamone.purchaseSystem.entities.PurchaseEvent;
 import com.csci318teamone.purchaseSystem.entities.PurchaseTemplate;
+import com.csci318teamone.purchaseSystem.repositories.PurchaseEventRepository;
 import com.csci318teamone.purchaseSystem.repositories.PurchaseRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,18 +33,26 @@ public class PurchaseServiceImpl implements PurchaseService {
   private WebClient.Builder webClientBuilder;
 
   private PurchaseRepository purchaseRepository;
+  private PurchaseEventRepository purchaseEventRepository;
+
+  @Autowired
+  public void setPurchaseEventRepository(
+    PurchaseEventRepository purchaseEventRepository
+  ) {
+    this.purchaseEventRepository = purchaseEventRepository;
+  }
 
   @Autowired
   public void setPurchaseRepository(PurchaseRepository purchaseRepository) {
     this.purchaseRepository = purchaseRepository;
   }
 
-  public List<Purchase> getPurchases() {
-    return purchaseRepository.findAll();
+  public List<PurchaseEvent> getPurchases() {
+    return purchaseEventRepository.findAll();
   }
 
-  public Purchase getPurchaseById(Long id) {
-    return purchaseRepository.findById(id).orElse(null);
+  public PurchaseEvent getPurchaseById(Long id) {
+    return purchaseEventRepository.findById(id).orElse(null);
   }
 
   public Purchase createPurchase(Purchase purchase) {
