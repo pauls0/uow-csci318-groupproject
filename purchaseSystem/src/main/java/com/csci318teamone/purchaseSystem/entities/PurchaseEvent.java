@@ -30,8 +30,8 @@ public class PurchaseEvent {
     super();
     this.setSupplier(purchase.getsupplier());
     this.setQuantity(purchase.getquantity());
-    this.setProductRecord(purchase.getProduct().toString());
-    this.setCustomerRecord(purchase.getCustomer().toString());
+    this.setProductRecord(purchase.getProduct().toJSONString());
+    this.setCustomerRecord(purchase.getCustomer().toJSONString());
   }
 
   public long getId() {

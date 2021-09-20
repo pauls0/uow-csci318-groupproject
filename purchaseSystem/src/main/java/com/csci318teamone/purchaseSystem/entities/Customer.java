@@ -2,6 +2,8 @@ package com.csci318teamone.purchaseSystem.entities;
 
 import com.csci318teamone.purchaseSystem.entities.Contact;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.persistence.*;
 
 @Entity
@@ -51,6 +53,15 @@ public class Customer {
       country,
       contact
     );
+  }
+
+  public String toJSONString() {
+    ObjectMapper objectMapper = new ObjectMapper();
+    try {
+      return objectMapper.writeValueAsString(this);
+    } catch (JsonProcessingException e) {
+      return "";
+    }
   }
 
   public Long getId() {
