@@ -22,171 +22,57 @@ Online Ordering Application using a microservices architecture in Java Spring Bo
 
 ### Instructions to Build and Run
 
-- The following commands should be executed within each systems respective directory
-- Building compiles a fat jar to `target/<system-name>System-<version>-SNAPSHOT.jar`
+Build: `cd [service-name]; ./mvnw compile -f "pom.xml";`
 
-Build: `./mvnw compile -f "pom.xml";`
+Run: `honcho start;`
 
-Run: `java -jar <system-name>System-<version>-SNAPSHOT.jar;`
+- Honcho required as a dependency. To install: `pip install honcho;`
+- Building compiles a fat jar to `/target/<system-name>System-<version>-SNAPSHOT.jar`
 
 ---
 
 ### Demonstration of Use-Cases
 
-|     |          | Use Case                                     |
-| --- | -------- | -------------------------------------------- |
-| 1   | Customer | Create/update Customer                       |
-| 2   | Customer | Create/update Customer Contact               |
-| 3   | Customer | Look up Customer basic info and Contact      |
-| 4   | Product  | Create/update Product                        |
-| 5   | Product  | Create/update Product Contact                |
-| 6   | Product  | Look up Product basic info and ProductDetail |
+| Link                         | Use Case                              | Service  |
+| ---------------------------- | ------------------------------------- | -------- |
+| [UseCase 1](#use-case-1)     | Create Customer/Contact               | Customer |
+| [UseCase 2](#use-case-2)     | Update Customer/Contact               | Customer |
+| [UseCase 3.1](#use-case-3-1) | Get Customer/Contact info             | Customer |
+| [UseCase 3.2](#use-case-3-2) | Get ALL Customer/Contact info         | Customer |
+| [UseCase 4](#use-case-4)     | Create Product/Detail                 | Product  |
+| [UseCase 5](#use-case-5)     | Update Product/Detail                 | Product  |
+| [UseCase 6.1](#use-case-6-1) | Get Product/Detail info               | Product  |
+| [UseCase 6.2](#use-case-6-2) | Get ALL Product/Detail info           | Product  |
+| [UseCase 7](#use-case-7)     | Create Purchase                       | Purchase |
+| [UseCase 8](#use-case-8)     | Get Customer/Product info by Purchase | Purchase |
 
-#### Return all customers, including their info and contact (Use-Case 3)
+---
 
-```bash
-curl -X GET http://localhost:8080/customers
-```
+<a name="use-case-1"></a>
 
-#### Return a specific customer (Use-Case 3)
-
-```bash
-curl -X GET http://localhost:8080/customers/[id]
-```
-
-- where `id` is the id of the customer
-
-#### Create a new customer (Use-Case 1, Use-Case 2)
+#### Use Case 1: Create Customer/Contact
 
 ```bash
 curl -X POST -H "Content-Type:application/json" -d \
-'[JSON]' http://localhost:8080/customers
+'[JSON]' http://localhost:8081/customers
 ```
 
 - where `JSON` is a JSON stringified customer object, to be added to the system
 
-#### Update exisiting customer/contact (Use-Case 1, Use-Case 2)
+<br/>
 
-```bash
-curl -X PUT -H "Content-Type:application/json" -d \
-'[JSON]' http://localhost:8080/customers/[id]
-```
-
-- where `id` is the id of the customer
-- where `JSON` is a JSON stringified customer object(Optionally with nested contact), to be updated in the system
-
-#### Return all products, including their info and productDetail (Use-Case 6)
-
-```bash
-curl -X GET http://localhost:8080/products
-```
-
-#### Return a specific product (Use-Case 6)
-
-```bash
-curl -X GET http://localhost:8080/products/[id]
-```
-
-- where `id` is the id of the product
-
-#### Create a new product (Use-Case 4, Use-Case 5)
-
-```bash
-curl -X POST -H "Content-Type:application/json" -d \
-'[JSON]' http://localhost:8080/products
-```
-
-- where `JSON` is a JSON stringified product object, to be added to the system
-
-#### Update exisiting product/productDetail (Use-Case 4, Use-Case 5)
-
-```bash
-curl -X PUT -H "Content-Type:application/json" -d \
-'[JSON]' http://localhost:8080/products/[id]
-```
-
-- where `id` is the id of the product
-- where `JSON` is a JSON stringified product object(Optionally with nested productDetail), to be updated in the system
-
----
-
-### Examples
-
-#### EXAMPLE: Return all customers, including their info and contact (Use-Case 3)
-
-```bash
-curl -X GET http://localhost:8080/customers
-```
-
-```JSON
-[
-  {
-    "id": 1,
-    "companyName": "Apple",
-    "address": "1 Apple Park Way, Cupertino, CA 95014",
-    "country": "USA",
-    "contact": {
-      "id": 2,
-      "name": "Tim Apple",
-      "phone": "123456",
-      "email": "tim@apple.com",
-      "position": "CEO"
-    }
-  },
-  {
-    "id": 3,
-    "companyName": "SpaceX",
-    "address": "42 Galactic Drive, San Francisco, CA 97468",
-    "country": "USA",
-    "contact": {
-      "id": 4,
-      "name": "Elon Musk",
-      "phone": "69420",
-      "email": "elon@spacex.com",
-      "position": "CEO"
-    }
-  }
-]
-```
-
-#### EXAMPLE: Return a specific customer (Use-Case 3)
-
-- Return customer with id `1`
-
-```bash
-curl -X GET http://localhost:8080/customers/1
-```
-
-```JSON
-{
-  "id": 1,
-  "companyName": "Apple",
-  "address": "1 Apple Park Way, Cupertino, CA 95014",
-  "country": "USA",
-  "contact": {
-    "id": 2,
-    "name": "Tim Apple",
-    "phone": "123456",
-    "email": "tim@apple.com",
-    "position": "CEO"
-  }
-}
-```
-
-#### EXAMPLE: Create a new customer (Use-Case 1, Use-Case 2)
-
-- Add `Google` as a new customer
+**EXAMPLE:** Add `Google` as a new customer
 
 ```bash
 curl -X POST -H "Content-Type:application/json" -d \
 '{"companyName":"Google",
 "address":"1600 Amphitheatre Parkway, Mountain View, California",
 "country":"USA","contact":{"name": "Test Testerson","phone": "0400000000",
-"email": "mail@example.com", "position": "CEO"}}' http://localhost:8080/customers
+"email": "mail@example.com", "position": "CEO"}}' http://localhost:8081/customers
 ```
 
 ```bash
-curl -X GET http://localhost:8080/customers
+curl -X GET http://localhost:8081/customers
 ```
 
 ```JSON
@@ -233,12 +119,26 @@ curl -X GET http://localhost:8080/customers
 ]
 ```
 
-#### EXAMPLE: Update exisiting customer/contact (Use-Case 1, Use-Case 2)
+---
 
-- Update customer contact name of customer with id `1` from Tim **Apple** to Tim **Cook**
+<a name="use-case-2"></a>
+
+#### Use Case 2: Update exisiting Customer/Contact
 
 ```bash
-curl -X GET http://localhost:8080/customers/1
+curl -X PUT -H "Content-Type:application/json" -d \
+'[JSON]' http://localhost:8081/customers/[id]
+```
+
+- where `id` is the id of the customer
+- where `JSON` is a JSON stringified customer object(Optionally with nested contact), to be updated in the system
+
+<br/>
+
+**EXAMPLE:** Update customer contact name of customer with id `1` from Tim **Apple** to Tim **Cook**
+
+```bash
+curl -X GET http://localhost:8081/customers/1
 ```
 
 ```JSON
@@ -261,11 +161,11 @@ curl -X GET http://localhost:8080/customers/1
 curl -X PUT -H "Content-Type:application/json" -d \
 '{"companyName": "Apple","address": "1 Apple Park Way, Cupertino, CA 95014",
 "country": "USA", "contact": {"id": 2,"name": "Tim Cook","phone": "123456",
-"email": "tim@apple.com", "position": "CEO}}' http://localhost:8080/customers/1
+"email": "tim@apple.com", "position": "CEO}}' http://localhost:8081/customers/1
 ```
 
 ```bash
-curl -X GET http://localhost:8080/customers/1
+curl -X GET http://localhost:8081/customers/1
 ```
 
 ```JSON
@@ -284,67 +184,106 @@ curl -X GET http://localhost:8080/customers/1
 }
 ```
 
-#### EXAMPLE: Return all products, including their info and productDetail (Use-Case 6)
+---
+
+<a name="use-case-3-1"></a>
+
+#### Use Case 3.1: Get Customer/Contact info
 
 ```bash
-curl -X GET http://localhost:8080/products
+curl -X GET http://localhost:8081/customers/[id]
+```
+
+- where `id` is the id of the customer
+
+<br/>
+
+**EXAMPLE:** Return customer with id `1`
+
+```bash
+curl -X GET http://localhost:8081/customers/1
+```
+
+```JSON
+{
+  "id": 1,
+  "companyName": "Apple",
+  "address": "1 Apple Park Way, Cupertino, CA 95014",
+  "country": "USA",
+  "contact": {
+    "id": 2,
+    "name": "Tim Apple",
+    "phone": "123456",
+    "email": "tim@apple.com",
+    "position": "CEO"
+  }
+}
+```
+
+---
+
+<a name="use-case-3-2"></a>
+
+#### Use Case 3.2: Get ALL Customer/Contact info\
+
+```bash
+curl -X GET http://localhost:8081/customers
+```
+
+<br/>
+
+**EXAMPLE:**
+
+```bash
+curl -X GET http://localhost:8081/customers
 ```
 
 ```JSON
 [
   {
     "id": 1,
-    "productCategory": "Fruit",
-    "name": "Royal Gala Apple",
-    "price": 0.62,
-    "stockQuantity": 200,
-    "productDetail": {
+    "companyName": "Apple",
+    "address": "1 Apple Park Way, Cupertino, CA 95014",
+    "country": "USA",
+    "contact": {
       "id": 2,
-      "description": "Apples are juicy, crisp and come in a variety of colours including red, pink and green.",
-      "comment": "Store your apples in the fridge"
+      "name": "Tim Apple",
+      "phone": "123456",
+      "email": "tim@apple.com",
+      "position": "CEO"
     }
   },
   {
     "id": 3,
-    "productCategory": "Fruit",
-    "name": "Cavendish Banana",
-    "price": 0.72,
-    "stockQuantity": 200,
-    "productDetail": {
+    "companyName": "SpaceX",
+    "address": "42 Galactic Drive, San Francisco, CA 97468",
+    "country": "USA",
+    "contact": {
       "id": 4,
-      "description": "Bananas are perfect for snacking, used in baking, fruit salads and smoothies.",
-      "comment": "Bananas are the worlds oldest fruit!"
+      "name": "Elon Musk",
+      "phone": "69420",
+      "email": "elon@spacex.com",
+      "position": "CEO"
     }
   }
 ]
 ```
 
-#### EXAMPLE: Return a specific product (Use-Case 6)
+---
 
-- Return product with id `1`
+<a name="use-case-4"></a>
+
+#### Use Case 4: Create Product/Detail
 
 ```bash
-curl -X GET http://localhost:8080/products/1
+curl -X POST -H "Content-Type:application/json" -d \
+'[JSON]' http://localhost:8082/products
 ```
 
-```JSON
-{
-  "id": 1,
-  "productCategory": "Fruit",
-  "name": "Royal Gala Apple",
-  "price": 0.62,
-  "stockQuantity": 200,
-  "productDetail": {
-    "id": 2,
-    "description": "Apples are juicy, crisp and come in a variety of colours including red, pink and green.",
-    "comment": "Store your apples in the fridge"
-  }
-}
-```
+- where `JSON` is a JSON stringified product object, to be added to the system
+  <br/>
 
-#### EXAMPLE: Create a new Product (Use-Case 4, Use-Case 5)
-
-- Add `Packham Pear` as a new product
+**EXAMPLE:** Add `Packham Pear` as a new product
 
 ```bash
 curl -X POST -H "Content-Type:application/json" -d \
@@ -352,11 +291,11 @@ curl -X POST -H "Content-Type:application/json" -d \
 "stockQuantity":200,"productDetail":{"description":
 "Crispy white juicy sweet flesh, with a beautiful green skin which turns light yellow when ripe",
 "comment":"Seasonality: March - December"}}' \
-http://localhost:8080/products
+http://localhost:8082/products
 ```
 
 ```bash
-curl -X GET http://localhost:8080/products
+curl -X GET http://localhost:8082/products
 ```
 
 ```JSON
@@ -400,12 +339,89 @@ curl -X GET http://localhost:8080/products
 ]
 ```
 
-#### EXAMPLE: Update exisiting product/productDetail (Use-Case 4, Use-Case 5)
+---
 
-- Update product price of product with id `1` from **0.62** to **0.70**
+<a name="use-case-5"></a>
+
+#### Use Case 5: Update Product/Detail
 
 ```bash
-curl -X GET http://localhost:8080/customers/1
+curl -X PUT -H "Content-Type:application/json" -d \
+'[JSON]' http://localhost:8082/products/[id]
+```
+
+- where `id` is the id of the product
+- where `JSON` is a JSON stringified product object(Optionally with nested productDetail), to be updated in the system
+
+<br/>
+
+**EXAMPLE:** Update customer contact name of customer with id `1` from Tim **Apple** to Tim **Cook**
+
+```bash
+curl -X GET http://localhost:8081/customers/1
+```
+
+```JSON
+{
+  "id": 1,
+  "companyName": "Apple",
+  "address": "1 Apple Park Way, Cupertino, CA 95014",
+  "country": "USA",
+  "contact": {
+    "id": 2,
+    "name": "Tim Apple",
+    "phone": "123456",
+    "email": "tim@apple.com",
+    "position": "CEO"
+  }
+}
+```
+
+```bash
+curl -X PUT -H "Content-Type:application/json" -d \
+'{"companyName": "Apple","address": "1 Apple Park Way, Cupertino, CA 95014",
+"country": "USA", "contact": {"id": 2,"name": "Tim Cook","phone": "123456",
+"email": "tim@apple.com", "position": "CEO}}' http://localhost:8081/customers/1
+```
+
+```bash
+curl -X GET http://localhost:8081/customers/1
+```
+
+```JSON
+{
+  "id": 1,
+  "companyName": "Apple",
+  "address": "1 Apple Park Way, Cupertino, CA 95014",
+  "country": "USA",
+  "contact": {
+    "id": 2,
+    "name": "Tim Cook",
+    "phone": "123456",
+    "email": "tim@apple.com",
+    "position": "CEO"
+  }
+}
+```
+
+---
+
+<a name="use-case-6-1"></a>
+
+#### Use Case 6.1: Get Product/Detail info
+
+```bash
+curl -X GET http://localhost:8082/products/[id]
+```
+
+- where `id` is the id of the product
+
+<br/>
+
+**EXAMPLE:** Return product with id `1`
+
+```bash
+curl -X GET http://localhost:8082/products/1
 ```
 
 ```JSON
@@ -423,32 +439,108 @@ curl -X GET http://localhost:8080/customers/1
 }
 ```
 
-```bash
-curl -X PUT -H "Content-Type:application/json" -d \
-'{"productCategory":"Fruit","name":"Royal Gala Apple",
-"price":0.70,"stockQuantity":200,"productDetail":{"description":
-"Apples are juicy, crisp and come in a variety of colours including red, pink and green.",
-"comment":"Store your apples in the fridge"}}' \
-http://localhost:8080/products/1
-```
+---
+
+<a name="use-case-6-2"></a>
+
+#### Use Case 6.2: Get ALL Product/Detail info
 
 ```bash
-curl -X GET http://localhost:8080/customers/1
+curl -X GET http://localhost:8082/products
+```
+
+<br/>
+
+**EXAMPLE:**
+
+```bash
+curl -X GET http://localhost:8082/products
+```
+
+```JSON
+[
+  {
+    "id": 1,
+    "productCategory": "Fruit",
+    "name": "Royal Gala Apple",
+    "price": 0.62,
+    "stockQuantity": 200,
+    "productDetail": {
+      "id": 2,
+      "description": "Apples are juicy, crisp and come in a variety of colours including red, pink and green.",
+      "comment": "Store your apples in the fridge"
+    }
+  },
+  {
+    "id": 3,
+    "productCategory": "Fruit",
+    "name": "Cavendish Banana",
+    "price": 0.72,
+    "stockQuantity": 200,
+    "productDetail": {
+      "id": 4,
+      "description": "Bananas are perfect for snacking, used in baking, fruit salads and smoothies.",
+      "comment": "Bananas are the worlds oldest fruit!"
+    }
+  }
+]
+```
+
+---
+
+<a name="use-case-7"></a>
+
+#### Use Case 7: Create Purchase
+
+```bash
+curl -X POST -H "Content-Type:application/json" -d \
+'{"quantity":[QTY],"productID":[PID], "customerID":[CID]}' \
+http://localhost:8083/purchases/new
+```
+
+- where `QTY` is the amount of products purchased
+- where `PID` is the id of the product
+- where `CID` is the id of the customer
+
+<br/>
+
+**EXAMPLE:** Add a new purchase of `1` units, of product with id `1`, by customer with id `1`
+
+```bash
+curl -X POST -H "Content-Type:application/json" -d \
+'{"quantity":1,"productID":1, "customerID":1}' \
+http://localhost:8083/purchases/new
+```
+
+---
+
+<a name="use-case-8"></a>
+
+#### Use Case 8: Get Customer/Product info by Purchase
+
+```bash
+curl -X GET http://localhost:8083/purchases/[id]
+```
+
+- where `id` is the id of the product
+
+<br/>
+
+**EXAMPLE:** Return purchase with id `1`
+
+```bash
+curl -X GET http://localhost:8083/purchases/1
 ```
 
 ```JSON
 {
   "id": 1,
-  "productCategory": "Fruit",
-  "name": "Royal Gala Apple",
-  "price": 0.70,
-  "stockQuantity": 200,
-  "productDetail": {
-    "id": 2,
-    "description": "Apples are juicy, crisp and come in a variety of colours including red, pink and green.",
-    "comment": "Store your apples in the fridge"
-  }
+  "supplier": null,
+  "quantity": 1,
+  "productRecord": "{\"id\":1,\"productCategory\":\"Fruit\",\"name\":\"Royal Gala Apple\",\"price\":0.62,\"stockQuantity\":200,\"productDetail\":{\"id\":null,\"description\":\"Apples are juicy\",\"comment\":\"Store your apples in the fridge\"}}",
+  "customerRecord": "{\"id\":1,\"companyName\":\"Apple\",\"address\":\"1 Apple Park Way, Cupertino, CA 95014\",\"country\":\"USA\",\"contact\":{\"id\":null,\"name\":\"Tim Apple\",\"phone\":\"123456\",\"email\":\"tim@apple.com\",\"position\":\"CEO\"}}"
 }
+
 ```
 
 ---
@@ -458,7 +550,9 @@ curl -X GET http://localhost:8080/customers/1
 #### How the Java Classes map to the multi-tier architecture:
 
 <!-- generated by mermaid compile action - START -->
+
 ![~mermaid diagram 1~](/.resources/README-md-1.svg)
+
 <details>
   <summary>Mermaid markup</summary>
 
@@ -489,7 +583,9 @@ graph TB
 <!-- generated by mermaid compile action - END -->
 
 <!-- generated by mermaid compile action - START -->
+
 ![~mermaid diagram 2~](/.resources/README-md-2.svg)
+
 <details>
   <summary>Mermaid markup</summary>
 
@@ -538,7 +634,9 @@ graph TB
 | Customer, Contact, Product, ProductDetail           | A Domain model                                                                                                                    |
 
 <!-- generated by mermaid compile action - START -->
+
 ![~mermaid diagram 3~](/.resources/README-md-3.svg)
+
 <details>
   <summary>Mermaid markup</summary>
 
@@ -615,7 +713,9 @@ classDiagram
 <!-- generated by mermaid compile action - END -->
 
 <!-- generated by mermaid compile action - START -->
+
 ![~mermaid diagram 4~](/.resources/README-md-4.svg)
+
 <details>
   <summary>Mermaid markup</summary>
 
