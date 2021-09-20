@@ -1,5 +1,7 @@
 package com.csci318teamone.purchaseSystem.entities;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.persistence.*;
 
 @Entity
@@ -45,6 +47,15 @@ public class Product {
       stockQuantity,
       productDetail
     );
+  }
+
+  public String toJSONString() {
+    ObjectMapper objectMapper = new ObjectMapper();
+    try {
+      return objectMapper.writeValueAsString(this);
+    } catch (JsonProcessingException e) {
+      return "";
+    }
   }
 
   public Long getId() {
