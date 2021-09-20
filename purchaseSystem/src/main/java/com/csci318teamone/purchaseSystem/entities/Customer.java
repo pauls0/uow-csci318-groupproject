@@ -1,8 +1,11 @@
 package com.csci318teamone.purchaseSystem.entities;
 
+import com.csci318teamone.purchaseSystem.entities.Contact;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Customer {
 
   @Id
@@ -17,13 +20,25 @@ public class Customer {
   @JoinColumn
   private Contact contact;
 
-  protected Customer() {}
+  public Customer() {}
 
-  public Customer(String companyName, String address, String country, Contact contact) {
+  public Customer(
+    String companyName,
+    String address,
+    String country,
+    Contact contact
+  ) {
     this.companyName = companyName;
     this.address = address;
     this.country = country;
     this.contact = contact;
+  }
+
+  public Customer(Customer customer) {
+    this.companyName = customer.getCompanyName();
+    this.address = customer.getAddress();
+    this.country = customer.getCountry();
+    this.contact = customer.getContact();
   }
 
   @Override
