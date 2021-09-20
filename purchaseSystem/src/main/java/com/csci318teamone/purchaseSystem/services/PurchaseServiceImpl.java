@@ -5,15 +5,28 @@ import com.csci318teamone.purchaseSystem.entities.Customer;
 import com.csci318teamone.purchaseSystem.entities.Product;
 import com.csci318teamone.purchaseSystem.entities.ProductDetail;
 import com.csci318teamone.purchaseSystem.entities.Purchase;
+import com.csci318teamone.purchaseSystem.entities.PurchaseEvent;
 import com.csci318teamone.purchaseSystem.entities.PurchaseTemplate;
 import com.csci318teamone.purchaseSystem.repositories.PurchaseRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.StreamingHttpOutputMessage.Body;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 @Service
 public class PurchaseServiceImpl implements PurchaseService {
+
+  private ApplicationEventPublisher publisher;
+
+  @Autowired
+  public void PurchaseService(ApplicationEventPublisher publisher) {
+    this.publisher = publisher;
+  }
 
   @Autowired
   private WebClient.Builder webClientBuilder;
@@ -55,36 +68,52 @@ public class PurchaseServiceImpl implements PurchaseService {
       .get()
       .uri("http://localhost:8082/products/" + purchaseTemplate.getProductID())
       .retrieve()
+      .onStatus(
+        HttpStatus::is4xxClientError,
+        error -> Mono.error(new RuntimeException("API not found"))
+      )
+      .onStatus(
+        HttpStatus::is5xxServerError,
+        error -> Mono.error(new RuntimeException("Server is not responding"))
+      )
       .bodyToMono(Product.class)
       .block();
 
-    return purchaseRepository.save(
-      new Purchase(
-        null,
-        purchaseTemplate.getQuantity(),
-        new Product(
-          product.getProductCategory(),
-          product.getName(),
-          product.getPrice(),
-          product.getStockQuantity(),
-          new ProductDetail(
-            product.getProductDetail().getDescription(),
-            product.getProductDetail().getComment()
-          )
-        ),
-        new Customer(
-          customer.getCompanyName(),
-          customer.getAddress(),
-          customer.getCountry(),
-          new Contact(
-            customer.getContact().getName(),
-            customer.getContact().getPhone(),
-            customer.getContact().getEmail(),
-            customer.getContact().getPosition()
-          )
+    Purchase purchase = new Purchase(
+      null,
+      purchaseTemplate.getQuantity(),
+      new Product(
+        product.getProductCategory(),
+        product.getName(),
+        product.getPrice(),
+        product.getStockQuantity(),
+        new ProductDetail(
+          product.getProductDetail().getDescription(),
+          product.getProductDetail().getComment()
+        )
+      ),
+      new Customer(
+        customer.getCompanyName(),
+        customer.getAddress(),
+        customer.getCountry(),
+        new Contact(
+          customer.getContact().getName(),
+          customer.getContact().getPhone(),
+          customer.getContact().getEmail(),
+          customer.getContact().getPosition()
         )
       )
     );
+    Customer tempCustomer = purchase.getCustomer();
+    tempCustomer.setId(customer.getId());
+    purchase.setCustomer(tempCustomer);
+
+    Product tempProduct = purchase.getProduct();
+    tempProduct.setId(product.getId());
+    purchase.setProduct(tempProduct);
+
+    recordPurchase(purchase);
+    return purchase;
   }
 
   public Purchase updatePurchaseById(Long id, Purchase newPurchase) {
@@ -109,5 +138,11 @@ public class PurchaseServiceImpl implements PurchaseService {
 
   public void deletePurchaseById(Long id) {
     purchaseRepository.deleteById(id);
+  }
+
+  public Purchase recordPurchase(Purchase purchase) {
+    PurchaseEvent purchaseEvent = new PurchaseEvent(purchase);
+    publisher.publishEvent(purchaseEvent);
+    return purchase;
   }
 }
