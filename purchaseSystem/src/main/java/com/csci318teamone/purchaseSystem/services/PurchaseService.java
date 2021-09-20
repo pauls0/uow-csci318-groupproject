@@ -16,4 +16,6 @@ public interface PurchaseService {
   Purchase updatePurchaseById(Long id, Purchase newPurchase);
 
   void deletePurchaseById(Long id);
+
+  Purchase recordPurchase(Purchase purchase);
 }
