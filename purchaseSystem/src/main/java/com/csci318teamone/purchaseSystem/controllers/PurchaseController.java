@@ -1,6 +1,7 @@
 package com.csci318teamone.purchaseSystem.controllers;
 
 import com.csci318teamone.purchaseSystem.entities.Purchase;
+import com.csci318teamone.purchaseSystem.entities.PurchaseEvent;
 import com.csci318teamone.purchaseSystem.entities.PurchaseTemplate;
 import com.csci318teamone.purchaseSystem.services.PurchaseService;
 import java.util.List;
@@ -19,7 +20,7 @@ public class PurchaseController {
   }
 
   @GetMapping
-  List<Purchase> getPurchases() {
+  List<PurchaseEvent> getPurchases() {
     return purchaseService.getPurchases();
   }
 
@@ -36,15 +37,12 @@ public class PurchaseController {
   }
 
   @GetMapping("{id}")
-  Purchase getPurchaseById(@PathVariable Long id) {
+  PurchaseEvent getPurchaseById(@PathVariable Long id) {
     return purchaseService.getPurchaseById(id);
   }
 
   @PutMapping("{id}")
-  Purchase updatePurchaseById(
-    @PathVariable Long id,
-    @RequestBody Purchase newPurchase
-  ) {
+  Purchase updatePurchaseById(@PathVariable Long id, @RequestBody Purchase newPurchase) {
     return purchaseService.updatePurchaseById(id, newPurchase);
   }
 
