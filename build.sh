@@ -1,0 +1,11 @@
+cd ./gateway;
+./mvnw package -f "pom.xml";
+cd ..;
+cd ./customerSystem;
+./mvnw package -f "pom.xml";
+cd ..;
+cd ./productSystem;
+./mvnw package -f "pom.xml";
+cd ..;
+cd ./purchaseSystem;
+./mvnw package -f "pom.xml";
