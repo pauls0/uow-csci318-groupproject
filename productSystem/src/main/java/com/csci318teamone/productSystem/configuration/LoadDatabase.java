@@ -25,10 +25,7 @@ class LoadDatabase {
             "Royal Gala Apple",
             0.62,
             200,
-            new ProductDetail(
-              "Apples are juicy, crisp and come in a variety of colours including red, pink and green.",
-              "Store your apples in the fridge"
-            )
+            new ProductDetail("Apples are juicy", "Store your apples in the fridge")
           )
         )
       );
@@ -41,10 +38,7 @@ class LoadDatabase {
             "Cavendish Banana",
             0.72,
             200,
-            new ProductDetail(
-              "Bananas are perfect for snacking, used in baking, fruit salads and smoothies.",
-              "Bananas are the worlds oldest fruit!"
-            )
+            new ProductDetail("Perfect for snacking", "The worlds oldest fruit!")
           )
         )
       );
