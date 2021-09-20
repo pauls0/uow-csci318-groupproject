@@ -1,12 +1,12 @@
-package com.csci318teamone.productSystem;
+package com.csci318teamone.purchaseSystem;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ProductSystemApplication {
+public class PurchaseSystemApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(ProductSystemApplication.class, args);
+    SpringApplication.run(PurchaseSystemApplication.class, args);
   }
 }

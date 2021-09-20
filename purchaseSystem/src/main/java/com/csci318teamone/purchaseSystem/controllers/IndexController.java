@@ -1,4 +1,4 @@
-package com.csci318teamone.productSystem.controllers;
+package com.csci318teamone.purchaseSystem.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -1,4 +1,4 @@
-package com.csci318teamone.productSystem.entities;
+package com.csci318teamone.purchaseSystem.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

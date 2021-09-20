@@ -8,10 +8,10 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.csci318teamone</groupId>
-	<artifactId>productSystem</artifactId>
+	<artifactId>purchaseSystem</artifactId>
 	<version>1.0.0</version>
-	<name>productSystem</name>
-	<description>Product system for an Online Ordering Application</description>
+	<name>purchaseSystem</name>
+	<description>purchase system for an Online Purchaseing Application</description>
 	<properties>
 		<java.version>1.8</java.version>
 		<plugin.prettier.goal>write</plugin.prettier.goal> <!-- re-write code with prettier -->
