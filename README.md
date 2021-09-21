@@ -54,7 +54,7 @@ Run: `honcho start;`
 
 ```bash
 curl -X POST -H "Content-Type:application/json" -d \
-'[JSON]' http://localhost:8081/customers
+'[JSON]' http://localhost:8080/customers
 ```
 
 - where `JSON` is a JSON stringified customer object, to be added to the system
@@ -68,11 +68,11 @@ curl -X POST -H "Content-Type:application/json" -d \
 '{"companyName":"Google",
 "address":"1600 Amphitheatre Parkway, Mountain View, California",
 "country":"USA","contact":{"name": "Test Testerson","phone": "0400000000",
-"email": "mail@example.com", "position": "CEO"}}' http://localhost:8081/customers
+"email": "mail@example.com", "position": "CEO"}}' http://localhost:8080/customers
 ```
 
 ```bash
-curl -X GET http://localhost:8081/customers
+curl -X GET http://localhost:8080/customers
 ```
 
 ```JSON
@@ -127,7 +127,7 @@ curl -X GET http://localhost:8081/customers
 
 ```bash
 curl -X PUT -H "Content-Type:application/json" -d \
-'[JSON]' http://localhost:8081/customers/[id]
+'[JSON]' http://localhost:8080/customers/[id]
 ```
 
 - where `id` is the id of the customer
@@ -138,7 +138,7 @@ curl -X PUT -H "Content-Type:application/json" -d \
 **EXAMPLE:** Update customer contact name of customer with id `1` from Tim **Apple** to Tim **Cook**
 
 ```bash
-curl -X GET http://localhost:8081/customers/1
+curl -X GET http://localhost:8080/customers/1
 ```
 
 ```JSON
@@ -161,11 +161,11 @@ curl -X GET http://localhost:8081/customers/1
 curl -X PUT -H "Content-Type:application/json" -d \
 '{"companyName": "Apple","address": "1 Apple Park Way, Cupertino, CA 95014",
 "country": "USA", "contact": {"id": 2,"name": "Tim Cook","phone": "123456",
-"email": "tim@apple.com", "position": "CEO}}' http://localhost:8081/customers/1
+"email": "tim@apple.com", "position": "CEO}}' http://localhost:8080/customers/1
 ```
 
 ```bash
-curl -X GET http://localhost:8081/customers/1
+curl -X GET http://localhost:8080/customers/1
 ```
 
 ```JSON
@@ -191,7 +191,7 @@ curl -X GET http://localhost:8081/customers/1
 #### Use Case 3.1: Get Customer/Contact info
 
 ```bash
-curl -X GET http://localhost:8081/customers/[id]
+curl -X GET http://localhost:8080/customers/[id]
 ```
 
 - where `id` is the id of the customer
@@ -201,7 +201,7 @@ curl -X GET http://localhost:8081/customers/[id]
 **EXAMPLE:** Return customer with id `1`
 
 ```bash
-curl -X GET http://localhost:8081/customers/1
+curl -X GET http://localhost:8080/customers/1
 ```
 
 ```JSON
@@ -227,7 +227,7 @@ curl -X GET http://localhost:8081/customers/1
 #### Use Case 3.2: Get ALL Customer/Contact info\
 
 ```bash
-curl -X GET http://localhost:8081/customers
+curl -X GET http://localhost:8080/customers
 ```
 
 <br/>
@@ -235,7 +235,7 @@ curl -X GET http://localhost:8081/customers
 **EXAMPLE:**
 
 ```bash
-curl -X GET http://localhost:8081/customers
+curl -X GET http://localhost:8080/customers
 ```
 
 ```JSON
@@ -277,7 +277,7 @@ curl -X GET http://localhost:8081/customers
 
 ```bash
 curl -X POST -H "Content-Type:application/json" -d \
-'[JSON]' http://localhost:8082/products
+'[JSON]' http://localhost:8080/products
 ```
 
 - where `JSON` is a JSON stringified product object, to be added to the system
@@ -291,11 +291,11 @@ curl -X POST -H "Content-Type:application/json" -d \
 "stockQuantity":200,"productDetail":{"description":
 "Crispy white juicy sweet flesh, with a beautiful green skin which turns light yellow when ripe",
 "comment":"Seasonality: March - December"}}' \
-http://localhost:8082/products
+http://localhost:8080/products
 ```
 
 ```bash
-curl -X GET http://localhost:8082/products
+curl -X GET http://localhost:8080/products
 ```
 
 ```JSON
@@ -347,7 +347,7 @@ curl -X GET http://localhost:8082/products
 
 ```bash
 curl -X PUT -H "Content-Type:application/json" -d \
-'[JSON]' http://localhost:8082/products/[id]
+'[JSON]' http://localhost:8080/products/[id]
 ```
 
 - where `id` is the id of the product
@@ -358,7 +358,7 @@ curl -X PUT -H "Content-Type:application/json" -d \
 **EXAMPLE:** Update customer contact name of customer with id `1` from Tim **Apple** to Tim **Cook**
 
 ```bash
-curl -X GET http://localhost:8081/customers/1
+curl -X GET http://localhost:8080/customers/1
 ```
 
 ```JSON
@@ -381,11 +381,11 @@ curl -X GET http://localhost:8081/customers/1
 curl -X PUT -H "Content-Type:application/json" -d \
 '{"companyName": "Apple","address": "1 Apple Park Way, Cupertino, CA 95014",
 "country": "USA", "contact": {"id": 2,"name": "Tim Cook","phone": "123456",
-"email": "tim@apple.com", "position": "CEO}}' http://localhost:8081/customers/1
+"email": "tim@apple.com", "position": "CEO}}' http://localhost:8080/customers/1
 ```
 
 ```bash
-curl -X GET http://localhost:8081/customers/1
+curl -X GET http://localhost:8080/customers/1
 ```
 
 ```JSON
@@ -411,7 +411,7 @@ curl -X GET http://localhost:8081/customers/1
 #### Use Case 6.1: Get Product/Detail info
 
 ```bash
-curl -X GET http://localhost:8082/products/[id]
+curl -X GET http://localhost:8080/products/[id]
 ```
 
 - where `id` is the id of the product
@@ -421,7 +421,7 @@ curl -X GET http://localhost:8082/products/[id]
 **EXAMPLE:** Return product with id `1`
 
 ```bash
-curl -X GET http://localhost:8082/products/1
+curl -X GET http://localhost:8080/products/1
 ```
 
 ```JSON
@@ -446,7 +446,7 @@ curl -X GET http://localhost:8082/products/1
 #### Use Case 6.2: Get ALL Product/Detail info
 
 ```bash
-curl -X GET http://localhost:8082/products
+curl -X GET http://localhost:8080/products
 ```
 
 <br/>
@@ -454,7 +454,7 @@ curl -X GET http://localhost:8082/products
 **EXAMPLE:**
 
 ```bash
-curl -X GET http://localhost:8082/products
+curl -X GET http://localhost:8080/products
 ```
 
 ```JSON
@@ -495,7 +495,7 @@ curl -X GET http://localhost:8082/products
 ```bash
 curl -X POST -H "Content-Type:application/json" -d \
 '{"quantity":[QTY],"productID":[PID], "customerID":[CID]}' \
-http://localhost:8083/purchases/new
+http://localhost:8080/purchases/new
 ```
 
 - where `QTY` is the amount of products purchased
@@ -509,7 +509,7 @@ http://localhost:8083/purchases/new
 ```bash
 curl -X POST -H "Content-Type:application/json" -d \
 '{"quantity":1,"productID":1, "customerID":1}' \
-http://localhost:8083/purchases/new
+http://localhost:8080/purchases/new
 ```
 
 ---
@@ -519,7 +519,7 @@ http://localhost:8083/purchases/new
 #### Use Case 8: Get Customer/Product info by Purchase
 
 ```bash
-curl -X GET http://localhost:8083/purchases/[id]
+curl -X GET http://localhost:8080/purchases/[id]
 ```
 
 - where `id` is the id of the product
@@ -529,7 +529,7 @@ curl -X GET http://localhost:8083/purchases/[id]
 **EXAMPLE:** Return purchase with id `1`
 
 ```bash
-curl -X GET http://localhost:8083/purchases/1
+curl -X GET http://localhost:8080/purchases/1
 ```
 
 ```JSON
