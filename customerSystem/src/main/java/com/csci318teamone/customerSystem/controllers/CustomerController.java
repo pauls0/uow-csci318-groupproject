@@ -33,10 +33,7 @@ public class CustomerController {
   }
 
   @PutMapping("{id}")
-  Customer updateCustomerById(
-    @PathVariable Long id,
-    @RequestBody Customer newCustomer
-  ) {
+  Customer updateCustomerById(@PathVariable Long id, @RequestBody Customer newCustomer) {
     return customerService.updateCustomerById(id, newCustomer);
   }
 

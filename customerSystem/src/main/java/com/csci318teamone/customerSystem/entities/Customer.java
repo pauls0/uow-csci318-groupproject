@@ -19,12 +19,7 @@ public class Customer {
 
   protected Customer() {}
 
-  public Customer(
-    String companyName,
-    String address,
-    String country,
-    Contact contact
-  ) {
+  public Customer(String companyName, String address, String country, Contact contact) {
     this.companyName = companyName;
     this.address = address;
     this.country = country;

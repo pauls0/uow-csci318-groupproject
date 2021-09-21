@@ -19,9 +19,7 @@ import reactor.core.publisher.Mono;
 @Service
 public class PurchaseEventHandler {
 
-  private static final Logger log = LoggerFactory.getLogger(
-    PurchaseEventHandler.class
-  );
+  private static final Logger log = LoggerFactory.getLogger(PurchaseEventHandler.class);
 
   @Autowired
   private WebClient.Builder webClientBuilder;
@@ -41,10 +39,7 @@ public class PurchaseEventHandler {
 
     ObjectMapper objectMapper = new ObjectMapper();
     try {
-      Product product = objectMapper.readValue(
-        purchaseEvent.getProductRecord(),
-        Product.class
-      );
+      Product product = objectMapper.readValue(purchaseEvent.getProductRecord(), Product.class);
       inventoryQuantity = product.getStockQuantity();
       productId = product.getId();
     } catch (Exception e) {
@@ -57,14 +52,8 @@ public class PurchaseEventHandler {
       .get()
       .uri("http://localhost:8082/products/" + productId)
       .retrieve()
-      .onStatus(
-        HttpStatus::is4xxClientError,
-        error -> Mono.error(new RuntimeException("API not found"))
-      )
-      .onStatus(
-        HttpStatus::is5xxServerError,
-        error -> Mono.error(new RuntimeException("Server is not responding"))
-      )
+      .onStatus(HttpStatus::is4xxClientError, error -> Mono.error(new RuntimeException("API not found")))
+      .onStatus(HttpStatus::is5xxServerError, error -> Mono.error(new RuntimeException("Server is not responding")))
       .bodyToMono(Product.class)
       .block();
 
@@ -77,10 +66,7 @@ public class PurchaseEventHandler {
       .uri("http://localhost:8082/products/" + productId)
       .body(BodyInserters.fromObject(updatedProduct))
       .retrieve()
-      .onStatus(
-        HttpStatus::isError,
-        error -> Mono.error(new RuntimeException("Other Error"))
-      )
+      .onStatus(HttpStatus::isError, error -> Mono.error(new RuntimeException("Other Error")))
       .bodyToMono(Product.class)
       .block();
     // log.info("Updated product record: " + updatedProduct.toJSONString());

@@ -22,12 +22,7 @@ public class Purchase {
 
   protected Purchase() {}
 
-  public Purchase(
-    String supplier,
-    int quantity,
-    Product product,
-    Customer customer
-  ) {
+  public Purchase(String supplier, int quantity, Product product, Customer customer) {
     this.supplier = supplier;
     this.quantity = quantity;
     this.product = product;

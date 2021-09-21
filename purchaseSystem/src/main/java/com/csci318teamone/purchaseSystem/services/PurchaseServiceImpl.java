@@ -36,9 +36,7 @@ public class PurchaseServiceImpl implements PurchaseService {
   private PurchaseEventRepository purchaseEventRepository;
 
   @Autowired
-  public void setPurchaseEventRepository(
-    PurchaseEventRepository purchaseEventRepository
-  ) {
+  public void setPurchaseEventRepository(PurchaseEventRepository purchaseEventRepository) {
     this.purchaseEventRepository = purchaseEventRepository;
   }
 
@@ -59,15 +57,11 @@ public class PurchaseServiceImpl implements PurchaseService {
     return purchaseRepository.save(purchase);
   }
 
-  public Purchase createPurchaseFromTemplate(
-    PurchaseTemplate purchaseTemplate
-  ) {
+  public Purchase createPurchaseFromTemplate(PurchaseTemplate purchaseTemplate) {
     Customer customer = webClientBuilder
       .build()
       .get()
-      .uri(
-        "http://localhost:8081/customers/" + purchaseTemplate.getCustomerID()
-      )
+      .uri("http://localhost:8081/customers/" + purchaseTemplate.getCustomerID())
       .retrieve()
       .bodyToMono(Customer.class)
       .block();
@@ -77,14 +71,8 @@ public class PurchaseServiceImpl implements PurchaseService {
       .get()
       .uri("http://localhost:8082/products/" + purchaseTemplate.getProductID())
       .retrieve()
-      .onStatus(
-        HttpStatus::is4xxClientError,
-        error -> Mono.error(new RuntimeException("API not found"))
-      )
-      .onStatus(
-        HttpStatus::is5xxServerError,
-        error -> Mono.error(new RuntimeException("Server is not responding"))
-      )
+      .onStatus(HttpStatus::is4xxClientError, error -> Mono.error(new RuntimeException("API not found")))
+      .onStatus(HttpStatus::is5xxServerError, error -> Mono.error(new RuntimeException("Server is not responding")))
       .bodyToMono(Product.class)
       .block();
 
@@ -96,10 +84,7 @@ public class PurchaseServiceImpl implements PurchaseService {
         product.getName(),
         product.getPrice(),
         product.getStockQuantity(),
-        new ProductDetail(
-          product.getProductDetail().getDescription(),
-          product.getProductDetail().getComment()
-        )
+        new ProductDetail(product.getProductDetail().getDescription(), product.getProductDetail().getComment())
       ),
       new Customer(
         customer.getCompanyName(),

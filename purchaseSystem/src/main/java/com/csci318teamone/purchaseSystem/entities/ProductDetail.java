@@ -24,12 +24,7 @@ public class ProductDetail {
 
   @Override
   public String toString() {
-    return String.format(
-      "ProductDetail[id=%d, description='%s', comment='%s']",
-      id,
-      description,
-      comment
-    );
+    return String.format("ProductDetail[id=%d, description='%s', comment='%s']", id, description, comment);
   }
 
   public Long getId() {

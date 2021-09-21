@@ -20,13 +20,7 @@ public class Product {
 
   protected Product() {}
 
-  public Product(
-    String productCategory,
-    String name,
-    double price,
-    int stockQuantity,
-    ProductDetail productDetail
-  ) {
+  public Product(String productCategory, String name, double price, int stockQuantity, ProductDetail productDetail) {
     this.productCategory = productCategory;
     this.name = name;
     this.price = price;
