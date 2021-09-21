@@ -638,23 +638,6 @@ graph TB
 ```
 
 ---
-#### Functionality of each Java class
-
-| Java Dependancy                                                                                | Purpose                       |
-| ---------------------------------------------------------------------------------------------- | ----------------------------- |
-| [Spring Web](https://mvnrepository.com/artifact/org.springframework/spring-web)                | RESTful web apps              |
-| [Spring Data JPA](https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa) | allows persistant data as SQL |
-| [H2 Database](https://mvnrepository.com/artifact/com.h2database/h2)                            | SQL database stored in-memory |
-
-| Java Class                                          | Purpose                                                                                                                           |
-| --------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| CustomerSystemApplication, ProductSystemApplication | Entry point to the application                                                                                                    |
-| CustomerController, ProductController               | Provides API functionality by handelling HTTP requests [GET,POST,PUT,DELETE]                                                      |
-| CustomerService, ProductService                     | Responsible for business logic and logic related to working with domain models                                                    |
-| CustomerRepository, ProductRepository               | Entends JpaRepository with the type of JpaRepository&lt;**_&lt;system-name&gt;_**, Long&gt;                                       |
-| JpaRepository                                       | A library allowing persisting Java objects in relational databases. Allows instances of Classes to be stored in H2database as SQL |
-| LoadDatabase                                        | Preloads database with test data on application startup                                                                           |
-| Customer, Contact, Product, ProductDetail           | A Domain model                                                                                                                    |
 
 #### Java Classes:
 
@@ -817,6 +800,26 @@ classDiagram
     <<@Repository>>
   }
 ```
+
+---
+
+#### Functionality of each Java class
+
+| Java Dependancy                                                                                | Purpose                       |
+| ---------------------------------------------------------------------------------------------- | ----------------------------- |
+| [Spring Web](https://mvnrepository.com/artifact/org.springframework/spring-web)                | RESTful web apps              |
+| [Spring Data JPA](https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa) | allows persistant data as SQL |
+| [H2 Database](https://mvnrepository.com/artifact/com.h2database/h2)                            | SQL database stored in-memory |
+
+| Java Class                                          | Purpose                                                                                                                           |
+| --------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| CustomerSystemApplication, ProductSystemApplication | Entry point to the application                                                                                                    |
+| CustomerController, ProductController               | Provides API functionality by handelling HTTP requests [GET,POST,PUT,DELETE]                                                      |
+| CustomerService, ProductService                     | Responsible for business logic and logic related to working with domain models                                                    |
+| CustomerRepository, ProductRepository               | Entends JpaRepository with the type of JpaRepository&lt;**_&lt;system-name&gt;_**, Long&gt;                                       |
+| JpaRepository                                       | A library allowing persisting Java objects in relational databases. Allows instances of Classes to be stored in H2database as SQL |
+| LoadDatabase                                        | Preloads database with test data on application startup                                                                           |
+| Customer, Contact, Product, ProductDetail           | A Domain model                                                                                                                    |
 
 ---
 
