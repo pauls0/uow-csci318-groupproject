@@ -870,3 +870,38 @@ src/main/java
           +- configuration
             +- LoadDatabase.java
 ```
+
+```
+src/main/java
+  +- com
+    +- csit318teamone
+      +- PurchaseSystem
+        +- PurchaseSystemApplication.java
+          +- entities
+            +- Customer.java
+            +- Contact.java
+            +- Product.java
+            +- ProductDetail.java
+            +- Purchase.java
+            +- PurchaseDetail.java
+            +- PurchaseEvent.java
+            +- PurchaseTemplate.java
+          +- controllers
+            +- PurchaseController.java
+          +- services
+            +- PurchaseService.java
+            +- PurchaseServiceImpl.java
+            +- PurchaseEventHandler.java
+          +- repositories
+            +- PurchaseEventRepository.java
+          +- configuration
+            +- LoadDatabase.java
+```
+
+```
+src/main/java
+  +- com
+    +- csit318teamone
+      +- gateway
+        +- GatewayApplication.java
+```
