@@ -12,59 +12,112 @@ Online Ordering Application using a microservices architecture in Java Spring Bo
 
 ### Group Members
 
-| Member | id |
-| --- | --- | 
-| Paul Sinnreich | ps484 |
+| Member          | id    |
+| --------------- | ----- |
+| Paul Sinnreich  | ps484 |
 | Michael Kilbane | mk507 |
-| Akhil Ameer | aa541 |
+| Akhil Ameer     | aa541 |
 
 ---
+
 ### Instructions to Build and Run
+
+- The following commands should be executed within each systems respective directory
+- Building compiles a fat jar to `target/<system-name>System-<version>-SNAPSHOT.jar`
 
 Build: `./mvnw compile -f "pom.xml";`
 
-Run: `java -jar customerSystem-1.0.0-SNAPSHOT.jar;`
-
-- Building compiles a fat jar to `target/customerSystem-1.0.0-SNAPSHOT.jar`
+Run: `java -jar <system-name>System-<version>-SNAPSHOT.jar;`
 
 ---
+
 ### Demonstration of Use-Cases
 
-| |  | Use Case |
-| --- | --- | --- |
-| 1 | Customer | Create/update Customer | 
-| 2 | Customer | Create/update Customer Contact |
-| 3 | Customer | Look up Customer basic info and Contact |
+|     |          | Use Case                                     |
+| --- | -------- | -------------------------------------------- |
+| 1   | Customer | Create/update Customer                       |
+| 2   | Customer | Create/update Customer Contact               |
+| 3   | Customer | Look up Customer basic info and Contact      |
+| 4   | Product  | Create/update Product                        |
+| 5   | Product  | Create/update Product Contact                |
+| 6   | Product  | Look up Product basic info and ProductDetail |
 
 #### Return all customers, including their info and contact (Use-Case 3)
+
 ```bash
 curl -X GET http://localhost:8080/customers
 ```
+
 #### Return a specific customer (Use-Case 3)
+
 ```bash
 curl -X GET http://localhost:8080/customers/[id]
 ```
+
 - where `id` is the id of the customer
+
 #### Create a new customer (Use-Case 1, Use-Case 2)
+
 ```bash
 curl -X POST -H "Content-Type:application/json" -d \
 '[JSON]' http://localhost:8080/customers
 ```
+
 - where `JSON` is a JSON stringified customer object, to be added to the system
+
 #### Update exisiting customer/contact (Use-Case 1, Use-Case 2)
+
 ```bash
 curl -X PUT -H "Content-Type:application/json" -d \
 '[JSON]' http://localhost:8080/customers/[id]
 ```
+
 - where `id` is the id of the customer
 - where `JSON` is a JSON stringified customer object(Optionally with nested contact), to be updated in the system
 
+#### Return all products, including their info and productDetail (Use-Case 6)
+
+```bash
+curl -X GET http://localhost:8080/products
+```
+
+#### Return a specific product (Use-Case 6)
+
+```bash
+curl -X GET http://localhost:8080/products/[id]
+```
+
+- where `id` is the id of the product
+
+#### Create a new product (Use-Case 4, Use-Case 5)
+
+```bash
+curl -X POST -H "Content-Type:application/json" -d \
+'[JSON]' http://localhost:8080/products
+```
+
+- where `JSON` is a JSON stringified product object, to be added to the system
+
+#### Update exisiting product/productDetail (Use-Case 4, Use-Case 5)
+
+```bash
+curl -X PUT -H "Content-Type:application/json" -d \
+'[JSON]' http://localhost:8080/products/[id]
+```
+
+- where `id` is the id of the product
+- where `JSON` is a JSON stringified product object(Optionally with nested productDetail), to be updated in the system
+
 ---
+
 ### Examples
+
 #### EXAMPLE: Return all customers, including their info and contact (Use-Case 3)
+
 ```bash
 curl -X GET http://localhost:8080/customers
 ```
+
 ```JSON
 [
   {
@@ -97,10 +150,13 @@ curl -X GET http://localhost:8080/customers
 ```
 
 #### EXAMPLE: Return a specific customer (Use-Case 3)
+
 - Return customer with id `1`
+
 ```bash
 curl -X GET http://localhost:8080/customers/1
 ```
+
 ```JSON
 {
   "id": 1,
@@ -118,17 +174,21 @@ curl -X GET http://localhost:8080/customers/1
 ```
 
 #### EXAMPLE: Create a new customer (Use-Case 1, Use-Case 2)
+
 - Add `Google` as a new customer
+
 ```bash
 curl -X POST -H "Content-Type:application/json" -d \
 '{"companyName":"Google",
-"address":"1600 Amphitheatre Parkway, Mountain View, California", 
-"country":"USA","contact":{"name": "Test Testerson","phone": "0400000000", 
+"address":"1600 Amphitheatre Parkway, Mountain View, California",
+"country":"USA","contact":{"name": "Test Testerson","phone": "0400000000",
 "email": "mail@example.com", "position": "CEO"}}' http://localhost:8080/customers
 ```
+
 ```bash
 curl -X GET http://localhost:8080/customers
 ```
+
 ```JSON
 [
   {
@@ -174,10 +234,13 @@ curl -X GET http://localhost:8080/customers
 ```
 
 #### EXAMPLE: Update exisiting customer/contact (Use-Case 1, Use-Case 2)
+
 - Update customer contact name of customer with id `1` from Tim **Apple** to Tim **Cook**
+
 ```bash
 curl -X GET http://localhost:8080/customers/1
 ```
+
 ```JSON
 {
   "id": 1,
@@ -193,15 +256,18 @@ curl -X GET http://localhost:8080/customers/1
   }
 }
 ```
+
 ```bash
 curl -X PUT -H "Content-Type:application/json" -d \
 '{"companyName": "Apple","address": "1 Apple Park Way, Cupertino, CA 95014",
 "country": "USA", "contact": {"id": 2,"name": "Tim Cook","phone": "123456",
 "email": "tim@apple.com", "position": "CEO}}' http://localhost:8080/customers/1
 ```
+
 ```bash
 curl -X GET http://localhost:8080/customers/1
 ```
+
 ```JSON
 {
   "id": 1,
@@ -218,31 +284,176 @@ curl -X GET http://localhost:8080/customers/1
 }
 ```
 
+#### EXAMPLE: Return all products, including their info and productDetail (Use-Case 6)
+
+```bash
+curl -X GET http://localhost:8080/products
+```
+
+```JSON
+[
+  {
+    "id": 1,
+    "productCategory": "Fruit",
+    "name": "Royal Gala Apple",
+    "price": 0.62,
+    "stockQuantity": 200,
+    "productDetail": {
+      "id": 2,
+      "description": "Apples are juicy, crisp and come in a variety of colours including red, pink and green.",
+      "comment": "Store your apples in the fridge"
+    }
+  },
+  {
+    "id": 3,
+    "productCategory": "Fruit",
+    "name": "Cavendish Banana",
+    "price": 0.72,
+    "stockQuantity": 200,
+    "productDetail": {
+      "id": 4,
+      "description": "Bananas are perfect for snacking, used in baking, fruit salads and smoothies.",
+      "comment": "Bananas are the worlds oldest fruit!"
+    }
+  }
+]
+```
+
+#### EXAMPLE: Return a specific product (Use-Case 6)
+
+- Return product with id `1`
+
+```bash
+curl -X GET http://localhost:8080/products/1
+```
+
+```JSON
+{
+  "id": 1,
+  "productCategory": "Fruit",
+  "name": "Royal Gala Apple",
+  "price": 0.62,
+  "stockQuantity": 200,
+  "productDetail": {
+    "id": 2,
+    "description": "Apples are juicy, crisp and come in a variety of colours including red, pink and green.",
+    "comment": "Store your apples in the fridge"
+  }
+}
+```
+
+#### EXAMPLE: Create a new Product (Use-Case 4, Use-Case 5)
+
+- Add `Packham Pear` as a new product
+
+```bash
+curl -X POST -H "Content-Type:application/json" -d \
+'{"productCategory":"Fruit","name":"Packham Pear","price":0.67,
+"stockQuantity":200,"productDetail":{"description":
+"Crispy white juicy sweet flesh, with a beautiful green skin which turns light yellow when ripe",
+"comment":"Seasonality: March - December"}}' \
+http://localhost:8080/products
+```
+
+```bash
+curl -X GET http://localhost:8080/products
+```
+
+```JSON
+[
+  {
+    "id": 1,
+    "productCategory": "Fruit",
+    "name": "Royal Gala Apple",
+    "price": 0.62,
+    "stockQuantity": 200,
+    "productDetail": {
+      "id": 2,
+      "description": "Apples are juicy, crisp and come in a variety of colours including red, pink and green.",
+      "comment": "Store your apples in the fridge"
+    }
+  },
+  {
+    "id": 3,
+    "productCategory": "Fruit",
+    "name": "Cavendish Banana",
+    "price": 0.72,
+    "stockQuantity": 200,
+    "productDetail": {
+      "id": 4,
+      "description": "Bananas are perfect for snacking, used in baking, fruit salads and smoothies.",
+      "comment": "Bananas are the worlds oldest fruit!"
+    }
+  },
+  {
+    "id": 5,
+    "productCategory": "Fruit",
+    "name": "Packham Pear",
+    "price": 0.67,
+    "stockQuantity": 200,
+    "productDetail": {
+      "id": 6,
+      "description": "Crispy white juicy sweet flesh, with a beautiful green skin which turns light yellow when ripe",
+      "comment": "Seasonality: March - December"
+    }
+  }
+]
+```
+
+#### EXAMPLE: Update exisiting product/productDetail (Use-Case 4, Use-Case 5)
+
+- Update product price of product with id `1` from **0.62** to **0.70**
+
+```bash
+curl -X GET http://localhost:8080/customers/1
+```
+
+```JSON
+{
+  "id": 1,
+  "productCategory": "Fruit",
+  "name": "Royal Gala Apple",
+  "price": 0.62,
+  "stockQuantity": 200,
+  "productDetail": {
+    "id": 2,
+    "description": "Apples are juicy, crisp and come in a variety of colours including red, pink and green.",
+    "comment": "Store your apples in the fridge"
+  }
+}
+```
+
+```bash
+curl -X PUT -H "Content-Type:application/json" -d \
+'{"productCategory":"Fruit","name":"Royal Gala Apple",
+"price":0.70,"stockQuantity":200,"productDetail":{"description":
+"Apples are juicy, crisp and come in a variety of colours including red, pink and green.",
+"comment":"Store your apples in the fridge"}}' \
+http://localhost:8080/products/1
+```
+
+```bash
+curl -X GET http://localhost:8080/customers/1
+```
+
+```JSON
+{
+  "id": 1,
+  "productCategory": "Fruit",
+  "name": "Royal Gala Apple",
+  "price": 0.70,
+  "stockQuantity": 200,
+  "productDetail": {
+    "id": 2,
+    "description": "Apples are juicy, crisp and come in a variety of colours including red, pink and green.",
+    "comment": "Store your apples in the fridge"
+  }
+}
+```
+
 ---
 
-### Architecture 
-
-#### Overall project structure:
-
-```
-src/main/java
-  +- com
-    +- csit318teamone
-      +- CustomerSystem
-        +- CustomerSystemApplication.java
-          +- entities
-            +- Customer.java
-            +- Contact.java
-          +- controllers
-            +- CustomerController.java
-          +- services
-            +- CustomerService.java
-            +- CustomerServiceImpl.java
-          +- repositories
-            +- CustomerRepository.java
-          +- configuration
-            +- LoadDatabase.java
-```
+### Architecture
 
 #### How the Java Classes map to the multi-tier architecture:
 
@@ -253,6 +464,7 @@ src/main/java
 
 ```mermaid
 graph TB
+  subgraph CustomerSystem
     Class1([CustomerController])
     Class2([CustomerService])
     Class3([CustomerRepository])
@@ -260,59 +472,76 @@ graph TB
     Class5[(H2Database)]
     subgraph Architecture Layers
         A[API layer]
-        B[Service layer] 
+        B[Service layer]
         C[Data Access layer]
         D[(Database)]
-        end
-    A --> B
-    B --> A
-    B --> C
-    C --> B
-    C --> D
-    A -.->|Equivalent to| Class1
-    B -.->|Equivalent to| Class2
-    C -.->|Equivalent to| Class3
-    D -.->|Equivalent to| Class5
-    Class3 -.->|extends| Class4
-    Class4 -.->|interfaces with| Class5
+    end
+  end
+  A -.->|Equivalent to| Class1
+  B -.->|Equivalent to| Class2
+  C -.->|Equivalent to| Class3
+  D -.->|Equivalent to| Class5
+  Class3 -.->|extends| Class4
+  Class4 -.->|interfaces with| Class5
 ```
 
 </details>
 <!-- generated by mermaid compile action - END -->
 
-#### Functionality of each Java class:
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-| Java Dependancy | Purpose                              
-| ---------------------------------------------------------------------------------------------- | ----------------------------- |
-| [Spring Web](https://mvnrepository.com/artifact/org.springframework/spring-web)                | RESTful web apps              |
-| [Spring Data JPA](https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa) | allows persistant data as SQL |
-| [H2 Database](https://mvnrepository.com/artifact/com.h2database/h2)                            | SQL database stored in-memory |
-
-Java Class | Purpose
---- | ---
-CustomerSystemApplication | Entry point to the application
-CustomerController | Provides API functionality by handelling HTTP requests [GET,POST,PUT,DELETE]
-CustomerService | Responsible for business logic and logic related to working with domain models
-CustomerRepository | Entends JpaRepository with the type of JpaRepository<Customer, Long>
-JpaRepository | A library allowing persisting Java objects in relational databases. Allows instances of Classes to be stored in H2database as SQL
-LoadDatabase | Preloads database with test data on application startup
-Customer | A Domain model
-Contact | A Domain model
-
-=======
->>>>>>> b314907 (docs: compile mermaid)
 <!-- generated by mermaid compile action - START -->
 ![~mermaid diagram 2~](/.resources/README-md-2.svg)
 <details>
   <summary>Mermaid markup</summary>
 
-<<<<<<< HEAD
->>>>>>> 62c0e00 (squash me)
-=======
->>>>>>> b314907 (docs: compile mermaid)
+```mermaid
+graph TB
+  subgraph ProductSystem
+    Class6([ProductController])
+    Class7([ProductService])
+    Class8([ProductRepository])
+    Class9([JpaRepository])
+    Class10[(H2Database)]
+    subgraph Architecture Layers
+        A2[API layer]
+        B2[Service layer]
+        C2[Data Access layer]
+        D2[(Database)]
+    end
+  end
+  A2 -.->|Equivalent to| Class6
+  B2 -.->|Equivalent to| Class7
+  C2 -.->|Equivalent to| Class8
+  D2 -.->|Equivalent to| Class10
+  Class8 -.->|extends| Class9
+  Class9 -.->|interfaces with| Class10
+```
+
+</details>
+<!-- generated by mermaid compile action - END -->
+
+#### Functionality of each Java class
+
+| Java Dependancy                                                                                | Purpose                       |
+| ---------------------------------------------------------------------------------------------- | ----------------------------- |
+| [Spring Web](https://mvnrepository.com/artifact/org.springframework/spring-web)                | RESTful web apps              |
+| [Spring Data JPA](https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa) | allows persistant data as SQL |
+| [H2 Database](https://mvnrepository.com/artifact/com.h2database/h2)                            | SQL database stored in-memory |
+
+| Java Class                                          | Purpose                                                                                                                           |
+| --------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| CustomerSystemApplication, ProductSystemApplication | Entry point to the application                                                                                                    |
+| CustomerController, ProductController               | Provides API functionality by handelling HTTP requests [GET,POST,PUT,DELETE]                                                      |
+| CustomerService, ProductService                     | Responsible for business logic and logic related to working with domain models                                                    |
+| CustomerRepository, ProductRepository               | Entends JpaRepository with the type of JpaRepository&lt;**_&lt;system-name&gt;_**, Long&gt;                                       |
+| JpaRepository                                       | A library allowing persisting Java objects in relational databases. Allows instances of Classes to be stored in H2database as SQL |
+| LoadDatabase                                        | Preloads database with test data on application startup                                                                           |
+| Customer, Contact, Product, ProductDetail           | A Domain model                                                                                                                    |
+
+<!-- generated by mermaid compile action - START -->
+![~mermaid diagram 3~](/.resources/README-md-3.svg)
+<details>
+  <summary>Mermaid markup</summary>
+
 ```mermaid
 classDiagram
     class CustomerSystemApplication{
@@ -346,7 +575,7 @@ classDiagram
         +toString() String
     }
     class CustomerController{
-        <<@RestController>> 
+        <<@RestController>>
         -CustomerService customerService
         +CustomerController() void
         +createCustomer(Customer) Customer
@@ -382,24 +611,121 @@ classDiagram
     Contact --o Customer : has contact
 ```
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 </details>
 <!-- generated by mermaid compile action - END -->
 
->>>>>>> b314907 (docs: compile mermaid)
-Class | Function
---- | ---
-CustomerSystemApplication | Entry point to the application
-CustomerController | Provides API functionality by handelling HTTP requests [GET,POST,PUT,DELETE]
-CustomerService | Responsible for business logic and logic related to working with domain models
-CustomerRepository | Entends JpaRepository with the type of JpaRepository<Customer, Long>
-JpaRepository | A library allowing persisting Java objects in relational databases. Allows instances of Classes to be stored in H2database as SQL
-LoadDatabase | Preloads database with test data on application startup
-Customer | A Domain model
-Contact | A Domain model
-=======
+<!-- generated by mermaid compile action - START -->
+![~mermaid diagram 4~](/.resources/README-md-4.svg)
+<details>
+  <summary>Mermaid markup</summary>
+
+```mermaid
+classDiagram
+    class ProductSystemApplication{
+        <<@SpringBootApplication>>
+        +main() void
+    }
+    class LoadDatabase{
+        <<@Configuration>>
+        +initDatabase(ProductRepository) CommandLineRunner
+    }
+    class Product{
+        <<@Entity>>
+        +Long «@Id»
+        +String productCategory
+        +String name
+        +double price
+        +int stockQuantity
+        +Product() void
+        +Product(String, String, double, int) void
+        +toString() String
+    }
+    class ProductDetail{
+        <<@Entity>>
+        +Long «@Id»
+        +String decription
+        +String comment
+        +ProductDetail() void
+        +ProductDetail(String, String) void
+        +toString() String
+    }
+    class ProductController{
+        <<@RestController>>
+        -ProductService ProductService
+        +ProductController() void
+        +createProduct(Product) Product
+        +getProducts() List<Product>
+        +getProductById(Long) Product
+        +updateProductById(Long, Product) Product
+        +deleteProductById(Long) void
+        +setProductRepository(ProductService) void
+    }
+    class ProductService{
+        <<@Service>>
+        -ProductRepository ProductRepository
+        +ProductServiceImpl( ) void
+        +createProduct( Product ) Product
+        +getProductById( Long ) Product
+        +deleteProductById( Long ) void
+        +updateProductById( Long, Product ) Product
+        +setProductRepository( ProductRepository ) void
+    }
+    class ProductRepository{
+        <<Interface>>
+    }
+    ProductRepository --> JpaRepository : extends JpaRepository<Product, Long>
+    Product <.. LoadDatabase  : Dependency
+    Product <.. ProductRepository : Dependency
+    Product <.. ProductService : Dependency
+    Product <.. ProductController  : Dependency
+    ProductController ..> ProductService : Has reference to
+    ProductService ..> ProductRepository : Has reference to
+    ProductDetail --o Product : has ProductDetail
+```
+
 </details>
 <!-- generated by mermaid compile action - END -->
->>>>>>> 62c0e00 (squash me)
+
+---
+
+#### Overall project structure:
+
+```
+src/main/java
+  +- com
+    +- csit318teamone
+      +- CustomerSystem
+        +- CustomerSystemApplication.java
+          +- entities
+            +- Customer.java
+            +- Contact.java
+          +- controllers
+            +- CustomerController.java
+          +- services
+            +- CustomerService.java
+            +- CustomerServiceImpl.java
+          +- repositories
+            +- CustomerRepository.java
+          +- configuration
+            +- LoadDatabase.java
+```
+
+```
+src/main/java
+  +- com
+    +- csit318teamone
+      +- ProductSystem
+        +- ProductSystemApplication.java
+          +- entities
+            +- Product.java
+            +- ProductDetail.java
+          +- controllers
+            +- ProductController.java
+          +- services
+            +- ProductService.java
+            +- ProductServiceImpl.java
+          +- repositories
+            +- ProductRepository.java
+          +- configuration
+            +- LoadDatabase.java
+```
