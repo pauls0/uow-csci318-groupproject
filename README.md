@@ -596,7 +596,7 @@ sequenceDiagram
   participant Purchase Service
   participant Customer Service
   participant Product Service
-  ACTOR->>Purchase Service: POST /purchases/?productID=value&customerID=value&quantity=value
+  ACTOR->>Purchase Service: POST /purchases/new
   Note right of ACTOR: body is JSON object with keys<br/>customerID, productID, quantity
   Purchase Service->>Customer Service: GET /customers/[customerID]
   Customer Service-->>Purchase Service: response
