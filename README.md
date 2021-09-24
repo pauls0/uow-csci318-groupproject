@@ -22,12 +22,10 @@ Online Ordering Application using a microservices architecture in Java Spring Bo
 
 ### Instructions to Build and Run
 
-Build: `cd [service-name]; ./mvnw compile -f "pom.xml";`
-
-Run: `honcho start;`
+Build: `./build.sh`
+Run: `./run.sh`
 
 - Honcho required as a dependency. To install: `pip install honcho;`
-- Building compiles a fat jar to `/target/<system-name>System-<version>-SNAPSHOT.jar`
 
 ---
 
