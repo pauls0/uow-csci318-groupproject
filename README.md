@@ -1,5 +1,6 @@
-# csci318 Project
+# csciXXX Project
 
+***Do not copy if you are in the same class, or you will fail.***
 Online Ordering Application using a microservices architecture in Java Spring Boot.
 
 <img src="https://img.shields.io/badge/Java-Language-blue?logo=java" alt="Java logo" height="25" /> &nbsp;
