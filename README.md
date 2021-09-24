@@ -520,7 +520,7 @@ http://localhost:8080/purchases/new
 curl -X GET http://localhost:8080/purchases/[id]
 ```
 
-- where `id` is the id of the product
+- where `id` is the id of the purchase
 
 <br/>
 
