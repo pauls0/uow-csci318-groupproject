@@ -1004,6 +1004,20 @@ In developing this project, a number of these techniques have been adopted to re
     - Customer
     - Product
     - Purchase
+  
+```mermaid
+classDiagram
+  Customer --* Contact : Composition
+```
+```mermaid
+classDiagram          
+  Product --* ProductDetail : Composition
+```
+```mermaid
+classDiagram
+  Purchase ..> Product : Dependency
+  Purchase ..> Customer : Dependency
+```
 
 - **Domain Services**
   - A domain service contains the business logic that is enacted when entities are the object of an action rather than the subject. In this project, one service has been implemented per aggregate.
