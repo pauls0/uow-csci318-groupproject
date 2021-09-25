@@ -979,6 +979,8 @@ src/main/java
         +- GatewayApplication.java
 ```
 
+---
+  
 #### Domain Driven Design Patterns Justification:
 
 Domain driven design is a software development paradigm which posits that functionality and logic surrounding a given application shall be described in terms of the business domain it satisfies. Most commonly used in combination with the object-oriented design methodology, domain driven design serves to map real world constructs and actions into those executed by a program. For example, a banking application might have domain models such as Account and Transaction, which have methods such as withdrawFunds or payAccount.
@@ -987,31 +989,30 @@ It is through these techniques that engineers are forced to consider and underst
 
 In developing this project, a number of these techniques have been adopted to remain in keeping with industry standards. These techniques include:
 
-**Entities**
-A fundamental concept in domain driven design, entities are defined by their identity and existence rather than their respective attributes. We implemented a number of entities which are mapped to relational database tables by the Java Persistence API. The key ones being:
-- Customer
-- Contact
-- Product
-- ProductDetail
-- Purchase
+- **Entities**
+  - A fundamental concept in domain driven design, entities are defined by their identity and existence rather than their respective attributes. We implemented a number of entities which are mapped to relational database tables by the Java Persistence API. The key ones being:
+    - Customer
+    - Contact
+    - Product
+    - ProductDetail
+    - Purchase
+- **Value Objects**
+  - Value objects are defined solely by the attributes they contain. Any change to these attributes would mean the creation of a new object. Therefore, value objects must be immutable. No identifiable value objects have been used in the project thus far.
 
-**Value Objects**
-Value objects are defined solely by the attributes they contain. Any change to these attributes would mean the creation of a new object. Therefore, value objects must be immutable. No identifiable value objects have been used in the project thus far.
+- **Aggregates**
+  - Aggregates are groups of interconnected entities and value objects that can be manipulated through a singular root access point. Aggregates are persisted as a whole, and shouldn’t share database transactions with other aggregates. The aggregates created in this project include:
+    - Customer
+    - Product
+    - Purchase
 
-**Aggregates**
-Aggregates are groups of interconnected entities and value objects that can be manipulated through a singular root access point. Aggregates are persisted as a whole, and shouldn’t share database transactions with other aggregates. The aggregates created in this project include:
-- Customer
-- Product
-- Purchase
+- **Domain Services**
+  - A domain service contains the business logic that is enacted when entities are the object of an action rather than the subject. In this project, one service has been implemented per aggregate.
 
-**Domain Services**
-A domain service contains the business logic that is enacted when entities are the object of an action rather than the subject. In this project, one service has been implemented per aggregate.
+- **Repositories**
+  - Used to decouple the access of a given entity from the way it is persisted. Similar to domain services, one repository has been implemented per aggregate or standalone entity.
 
-**Repositories**
-Used to decouple the access of a given entity from the way it is persisted. Similar to domain services, one repository has been implemented per aggregate or standalone entity.
+- **Domain Events**
+  - Domain events can be subscribed to by other sections of an application that wish to be notified of certain events. This has been used in the purchase service to update the quantity of a product after a purchase has taken place.
 
-**Domain Events**
-Domain events can be subscribed to by other sections of an application that wish to be notified of certain events. This has been used in the purchase service to update the quantity of a product after a purchase has taken place.
-
-**Event Sourcing**
-Event sourcing is a pattern that enables values to be stored not as a singular value, but as the entire history of events that led to a given state. This pattern is used to track the quantity of products.
+- **Event Sourcing**
+  - Event sourcing is a pattern that enables values to be stored not as a singular value, but as the entire history of events that led to a given state. This pattern is used to track the quantity of products.
