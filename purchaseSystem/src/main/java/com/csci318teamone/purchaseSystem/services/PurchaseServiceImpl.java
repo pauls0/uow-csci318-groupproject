@@ -7,6 +7,7 @@ import com.csci318teamone.purchaseSystem.entities.ProductDetail;
 import com.csci318teamone.purchaseSystem.entities.Purchase;
 import com.csci318teamone.purchaseSystem.entities.PurchaseEvent;
 import com.csci318teamone.purchaseSystem.entities.PurchaseTemplate;
+import com.csci318teamone.purchaseSystem.exception.PurchaseNotFoundException;
 import com.csci318teamone.purchaseSystem.repositories.PurchaseEventRepository;
 import com.csci318teamone.purchaseSystem.repositories.PurchaseRepository;
 import java.util.List;
@@ -52,7 +53,7 @@ public class PurchaseServiceImpl implements PurchaseService {
   }
 
   public PurchaseEvent getPurchaseById(Long id) {
-    return purchaseEventRepository.findById(id).orElse(null);
+    return purchaseEventRepository.findById(id).orElseThrow(() -> new PurchaseNotFoundException("Customer not found"));
   }
 
   public Purchase createPurchase(Purchase purchase) {
