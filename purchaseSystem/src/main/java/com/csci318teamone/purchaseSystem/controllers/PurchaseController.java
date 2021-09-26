@@ -42,7 +42,10 @@ public class PurchaseController {
   }
 
   @PutMapping("{id}")
-  Purchase updatePurchaseById(@PathVariable Long id, @RequestBody Purchase newPurchase) {
+  Purchase updatePurchaseById(
+    @PathVariable Long id,
+    @RequestBody Purchase newPurchase
+  ) {
     return purchaseService.updatePurchaseById(id, newPurchase);
   }
 

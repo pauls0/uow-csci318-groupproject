@@ -7,6 +7,7 @@ import com.csci318teamone.purchaseSystem.entities.ProductDetail;
 import com.csci318teamone.purchaseSystem.entities.Purchase;
 import com.csci318teamone.purchaseSystem.entities.PurchaseEvent;
 import com.csci318teamone.purchaseSystem.entities.PurchaseTemplate;
+import com.csci318teamone.purchaseSystem.exception.PurchaseNotAllowedException;
 import com.csci318teamone.purchaseSystem.exception.PurchaseNotFoundException;
 import com.csci318teamone.purchaseSystem.repositories.PurchaseEventRepository;
 import com.csci318teamone.purchaseSystem.repositories.PurchaseRepository;
@@ -14,9 +15,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.StreamingHttpOutputMessage.Body;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
@@ -53,7 +52,9 @@ public class PurchaseServiceImpl implements PurchaseService {
   }
 
   public PurchaseEvent getPurchaseById(Long id) {
-    return purchaseEventRepository.findById(id).orElseThrow(() -> new PurchaseNotFoundException("Customer not found"));
+    return purchaseEventRepository
+      .findById(id)
+      .orElseThrow(() -> new PurchaseNotFoundException("Purchase not found"));
   }
 
   public Purchase createPurchase(Purchase purchase) {
@@ -70,6 +71,11 @@ public class PurchaseServiceImpl implements PurchaseService {
         "http://localhost:8081/customers/" + purchaseTemplate.getCustomerID()
       )
       .retrieve()
+      .onStatus(
+        HttpStatus::is4xxClientError,
+        error ->
+          Mono.error(new PurchaseNotAllowedException("Customer not found"))
+      )
       .bodyToMono(Customer.class)
       .block();
 
@@ -80,11 +86,8 @@ public class PurchaseServiceImpl implements PurchaseService {
       .retrieve()
       .onStatus(
         HttpStatus::is4xxClientError,
-        error -> Mono.error(new RuntimeException("API not found"))
-      )
-      .onStatus(
-        HttpStatus::is5xxServerError,
-        error -> Mono.error(new RuntimeException("Server is not responding"))
+        error ->
+          Mono.error(new PurchaseNotAllowedException("Product not found"))
       )
       .bodyToMono(Product.class)
       .block();
@@ -122,8 +125,12 @@ public class PurchaseServiceImpl implements PurchaseService {
     tempProduct.setId(product.getId());
     purchase.setProduct(tempProduct);
 
-    recordPurchase(purchase);
-    return purchase;
+    if (purchaseTemplate.getQuantity() > product.getStockQuantity()) {
+      throw new PurchaseNotAllowedException("Not enough stock");
+    } else {
+      recordPurchase(purchase);
+      return purchase;
+    }
   }
 
   public Purchase updatePurchaseById(Long id, Purchase newPurchase) {
