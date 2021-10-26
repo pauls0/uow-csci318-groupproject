@@ -1,6 +1,6 @@
 # csciXXX Project
 
-***Do not copy if you are in the same class, or you will fail.***
+**_Do not copy if you are in the same class, or you will fail._**
 Online Ordering Application using a microservices architecture in Java Spring Boot.
 
 <img src="https://img.shields.io/badge/Java-Language-blue?logo=java" alt="Java logo" height="25" /> &nbsp;
@@ -32,18 +32,19 @@ Run: `./run.sh`
 
 ### Demonstration of Use-Cases
 
-| Link                         | Use Case                              | Service  |
-| ---------------------------- | ------------------------------------- | -------- |
-| [UseCase 1](#use-case-1)     | Create Customer/Contact               | Customer |
-| [UseCase 2](#use-case-2)     | Update Customer/Contact               | Customer |
-| [UseCase 3.1](#use-case-3-1) | Get Customer/Contact info             | Customer |
-| [UseCase 3.2](#use-case-3-2) | Get ALL Customer/Contact info         | Customer |
-| [UseCase 4](#use-case-4)     | Create Product/Detail                 | Product  |
-| [UseCase 5](#use-case-5)     | Update Product/Detail                 | Product  |
-| [UseCase 6.1](#use-case-6-1) | Get Product/Detail info               | Product  |
-| [UseCase 6.2](#use-case-6-2) | Get ALL Product/Detail info           | Product  |
-| [UseCase 7](#use-case-7)     | Create Purchase                       | Purchase |
-| [UseCase 8](#use-case-8)     | Get Customer/Product info by Purchase | Purchase |
+| Link                         | Use Case                      | Service  |
+| ---------------------------- | ----------------------------- | -------- |
+| [UseCase 1](#use-case-1)     | Create Customer/Contact       | Customer |
+| [UseCase 2](#use-case-2)     | Update Customer/Contact       | Customer |
+| [UseCase 3.1](#use-case-3-1) | Get Customer/Contact info     | Customer |
+| [UseCase 3.2](#use-case-3-2) | Get ALL Customer/Contact info | Customer |
+| [UseCase 4](#use-case-4)     | Create Product/Detail         | Product  |
+| [UseCase 5](#use-case-5)     | Update Product/Detail         | Product  |
+| [UseCase 6.1](#use-case-6-1) | Get Product/Detail info       | Product  |
+| [UseCase 6.2](#use-case-6-2) | Get ALL Product/Detail info   | Product  |
+| [UseCase 7](#use-case-7)     | Create Purchase               | Purchase |
+| [UseCase 8](#use-case-8)     | Get Customer info by Purchase | Purchase |
+| [UseCase 9](#use-case-9)     | Get Product info by Purchase  | Purchase |
 
 ---
 
@@ -515,7 +516,38 @@ http://localhost:8080/purchases/new
 
 <a name="use-case-8"></a>
 
-#### Use Case 8: Get Customer/Product info by Purchase
+#### Use Case 8: Get Customer info by Purchase
+
+```bash
+curl -X GET http://localhost:8080/purchases/[id]
+```
+
+- where `id` is the id of the purchase
+
+<br/>
+
+**EXAMPLE:** Return purchase with id `1`
+
+```bash
+curl -X GET http://localhost:8080/purchases/1
+```
+
+```JSON
+{
+  "id": 1,
+  "supplier": null,
+  "quantity": 1,
+  "productRecord": "{\"id\":1,\"productCategory\":\"Fruit\",\"name\":\"Royal Gala Apple\",\"price\":0.62,\"stockQuantity\":200,\"productDetail\":{\"id\":null,\"description\":\"Apples are juicy\",\"comment\":\"Store your apples in the fridge\"}}",
+  "customerRecord": "{\"id\":1,\"companyName\":\"Apple\",\"address\":\"1 Apple Park Way, Cupertino, CA 95014\",\"country\":\"USA\",\"contact\":{\"id\":null,\"name\":\"Tim Apple\",\"phone\":\"123456\",\"email\":\"tim@apple.com\",\"position\":\"CEO\"}}"
+}
+
+```
+
+---
+
+<a name="use-case-9"></a>
+
+#### Use Case 9: Get Product info by Purchase
 
 ```bash
 curl -X GET http://localhost:8080/purchases/[id]
@@ -1007,15 +1039,15 @@ It is through these techniques that engineers are forced to consider and underst
 
 In developing this project, a number of these techniques have been adopted to remain in keeping with industry standards. These techniques include:
 
-| Pattern | Explaination                                                                                                                                                                                                                                                 | Example                                |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------- |
-| Entities    | A fundamental concept in domain driven design, entities are defined by their identity and existence rather than their respective attributes. We implemented a number of entities which are mapped to relational database tables by the Java Persistence API. | - Customer<br/>- Contact<br/>- Product<br/>- ProductDetail<br/>- Purchase |
-| Value Objects | Value objects are defined solely by the attributes they contain. Any change to these attributes would mean the creation of a new object. Therefore, value objects must be immutable. | The Purchase template contains a value objects productRecord and customerRecord which store json strings of the product and customer objects respectively. The records are value objects as two orders can have same value for a record, while the two records are not the same object. |
-| Aggregates | Aggregates are groups of interconnected entities and value objects that can be manipulated through a singular root access point. Aggregates are persisted as a whole, and shouldn’t share database transactions with other aggregates. | [Aggregates Diagram](#aggregates-diagram) |
-| Domain Services | A domain service contains the business logic that is enacted when entities are the object of an action rather than the subject. | One service has been implemented per aggregate. |
-| Repositories | Used to decouple the access of a given entity from the way it is persisted. | One repository has been implemented per aggregate or standalone entity |
-| Domain Events | Domain events can be subscribed to by other sections of an application that wish to be notified of certain events. | Used to update the quantity of a product after a purchase has taken place. |
-| Event Sourcing | Event sourcing is a pattern that enables values to be stored not as a singular value, but as the entire history of events that led to a given state. | This pattern is used to track the quantity of products. |
+| Pattern         | Explaination                                                                                                                                                                                                                                                 | Example                                                                                                                                                                                                                                                                                 |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Entities        | A fundamental concept in domain driven design, entities are defined by their identity and existence rather than their respective attributes. We implemented a number of entities which are mapped to relational database tables by the Java Persistence API. | - Customer<br/>- Contact<br/>- Product<br/>- ProductDetail<br/>- Purchase                                                                                                                                                                                                               |
+| Value Objects   | Value objects are defined solely by the attributes they contain. Any change to these attributes would mean the creation of a new object. Therefore, value objects must be immutable.                                                                         | The Purchase template contains a value objects productRecord and customerRecord which store json strings of the product and customer objects respectively. The records are value objects as two orders can have same value for a record, while the two records are not the same object. |
+| Aggregates      | Aggregates are groups of interconnected entities and value objects that can be manipulated through a singular root access point. Aggregates are persisted as a whole, and shouldn’t share database transactions with other aggregates.                       | [Aggregates Diagram](#aggregates-diagram)                                                                                                                                                                                                                                               |
+| Domain Services | A domain service contains the business logic that is enacted when entities are the object of an action rather than the subject.                                                                                                                              | One service has been implemented per aggregate.                                                                                                                                                                                                                                         |
+| Repositories    | Used to decouple the access of a given entity from the way it is persisted.                                                                                                                                                                                  | One repository has been implemented per aggregate or standalone entity                                                                                                                                                                                                                  |
+| Domain Events   | Domain events can be subscribed to by other sections of an application that wish to be notified of certain events.                                                                                                                                           | Used to update the quantity of a product after a purchase has taken place.                                                                                                                                                                                                              |
+| Event Sourcing  | Event sourcing is a pattern that enables values to be stored not as a singular value, but as the entire history of events that led to a given state.                                                                                                         | This pattern is used to track the quantity of products.                                                                                                                                                                                                                                 |
 
 <br/>
 Aggregates Diagram:
