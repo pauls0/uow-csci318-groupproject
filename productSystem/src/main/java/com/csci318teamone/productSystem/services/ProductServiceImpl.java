@@ -1,6 +1,7 @@
 package com.csci318teamone.productSystem.services;
 
 import com.csci318teamone.productSystem.entities.Product;
+import com.csci318teamone.productSystem.exception.ProductNotFoundException;
 import com.csci318teamone.productSystem.repositories.ProductRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class ProductServiceImpl implements ProductService {
   }
 
   public Product getProductById(Long id) {
-    return productRepository.findById(id).orElse(null);
+    return productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("Product not found"));
   }
 
   public Product createProduct(Product product) {
