@@ -30,7 +30,9 @@ public class PurchaseController {
   }
 
   @PostMapping("{new}")
-  Purchase createPurchaseFromTemplate(@RequestBody PurchaseTemplate newPurchaseTemplate) {
+  Purchase createPurchaseFromTemplate(
+    @RequestBody PurchaseTemplate newPurchaseTemplate
+  ) {
     return purchaseService.createPurchaseFromTemplate(newPurchaseTemplate);
   }
 
@@ -40,7 +42,10 @@ public class PurchaseController {
   }
 
   @PutMapping("{id}")
-  Purchase updatePurchaseById(@PathVariable Long id, @RequestBody Purchase newPurchase) {
+  Purchase updatePurchaseById(
+    @PathVariable Long id,
+    @RequestBody Purchase newPurchase
+  ) {
     return purchaseService.updatePurchaseById(id, newPurchase);
   }
 

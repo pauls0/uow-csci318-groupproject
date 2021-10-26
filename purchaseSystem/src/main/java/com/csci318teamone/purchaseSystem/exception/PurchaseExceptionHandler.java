@@ -22,4 +22,17 @@ public class PurchaseExceptionHandler {
     );
     return new ResponseEntity<>(purchaseException, notFound);
   }
+
+  @ExceptionHandler(value = { PurchaseNotAllowedException.class })
+  public ResponseEntity<Object> handlePurchaseNotAllowedException(
+    PurchaseNotAllowedException e
+  ) {
+    HttpStatus serverError = HttpStatus.INTERNAL_SERVER_ERROR;
+    PurchaseException purchaseException = new PurchaseException(
+      e.getMessage(),
+      serverError,
+      ZonedDateTime.now(ZoneId.of("Z"))
+    );
+    return new ResponseEntity<>(purchaseException, serverError);
+  }
 }
