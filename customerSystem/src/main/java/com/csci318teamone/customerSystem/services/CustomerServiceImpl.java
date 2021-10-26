@@ -1,6 +1,7 @@
 package com.csci318teamone.customerSystem.services;
 
 import com.csci318teamone.customerSystem.entities.Customer;
+import com.csci318teamone.customerSystem.exception.CustomerNotFoundException;
 import com.csci318teamone.customerSystem.repositories.CustomerRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class CustomerServiceImpl implements CustomerService {
   }
 
   public Customer getCustomerById(Long id) {
-    return customerRepository.findById(id).orElse(null);
+    return customerRepository.findById(id).orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
   }
 
   public Customer createCustomer(Customer customer) {
