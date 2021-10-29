@@ -1057,7 +1057,7 @@ curl -X GET http://localhost:8080/products
 ```bash
 curl -X POST -H "Content-Type:application/json" -d \
 '{"quantity":[QTY],"productID":[PID], "customerID":[CID]}' \
-http://localhost:8080/purchases/new
+http://localhost:8080/purchases
 ```
 
 - where `QTY` is the amount of products purchased
@@ -1071,7 +1071,7 @@ http://localhost:8080/purchases/new
 ```bash
 curl -X POST -H "Content-Type:application/json" -d \
 '{"quantity":1,"productID":1, "customerID":1}' \
-http://localhost:8080/purchases/new
+http://localhost:8080/purchases
 ```
 
 ---
