@@ -24,12 +24,12 @@ public class PurchaseController {
     return purchaseService.getPurchases();
   }
 
-  @PostMapping
+  @PostMapping("{new}")
   Purchase createPurchase(@RequestBody Purchase newPurchase) {
     return purchaseService.createPurchase(newPurchase);
   }
 
-  @PostMapping("{new}")
+  @PostMapping
   Purchase createPurchaseFromTemplate(
     @RequestBody PurchaseTemplate newPurchaseTemplate
   ) {
