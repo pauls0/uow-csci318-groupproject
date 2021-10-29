@@ -1140,26 +1140,24 @@ curl -X GET http://localhost:8080/purchases/1
 
 <a name="use-case-10"></a>
 
-#### Use Case 10: Generate the total order quantity per product
+#### Use Case 10: Get the total order quantity for a product
 
 ```bash
-echo 'some command';
+curl -X GET http://localhost:8183/brand/[product_id]/quantity
 ```
 
-- where `p` is the product-id
+- where `product_id` is the id of the product
 
 <br/>
 
-**EXAMPLE:** Return total order quantity for product with id `1`
+**EXAMPLE:** Return product with id `1`
 
 ```bash
-echo 'some command';
+curl -X GET http://localhost:8183/brand/1/quantity
 ```
 
 ```JSON
-{
-"some": "JSON"
-}
+6
 ```
 
 ---
@@ -1169,7 +1167,8 @@ echo 'some command';
 #### Use Case 11: Look up a list of products and the total order value for a customer
 
 ```bash
-echo 'some command';
+curl -X GET http://localhost:8183/brand/1/quantity
+6
 ```
 
 - where `c` is the customer-id
