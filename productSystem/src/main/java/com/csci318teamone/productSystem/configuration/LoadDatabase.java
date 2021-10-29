@@ -42,6 +42,45 @@ class LoadDatabase {
           )
         )
       );
+
+      log.info(
+        "Preloading " +
+        productRepository.save(
+          new Product(
+            "Fruit",
+            "Packham Pear",
+            0.67,
+            200,
+            new ProductDetail("Crispy white juicy sweet flesh", "Seasonality: March - December")
+          )
+        )
+      );
+
+      log.info(
+        "Preloading " +
+        productRepository.save(
+          new Product(
+            "Fruit",
+            "Navel Orange",
+            0.64,
+            200,
+            new ProductDetail("the fruit of citrus species in the family Rutaceae", "2 week selflife")
+          )
+        )
+      );
+
+      log.info(
+        "Preloading " +
+        productRepository.save(
+          new Product(
+            "Fruit",
+            "Avocado",
+            1.0,
+            200,
+            new ProductDetail("a large berry containing a large seed", "around 73% water")
+          )
+        )
+      );
     };
   }
 }

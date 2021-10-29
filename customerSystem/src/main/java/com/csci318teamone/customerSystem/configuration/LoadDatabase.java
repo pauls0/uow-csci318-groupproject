@@ -40,6 +40,42 @@ class LoadDatabase {
           )
         )
       );
+
+      log.info(
+        "Preloading " +
+        customerRepository.save(
+          new Customer(
+            "Google",
+            "1600 Amphitheatre Parkway, Mountain View, California",
+            "USA",
+            new Contact("Test Testerson", "0400000000", "mail@example.com", "CEO")
+          )
+        )
+      );
+
+      log.info(
+        "Preloading " +
+        customerRepository.save(
+          new Customer(
+            "Microsoft",
+            "One Microsoft Way, Redmond, Washington",
+            "USA",
+            new Contact("Satya Nadella", "69420", "Satya@microsoft.com", "CEO")
+          )
+        )
+      );
+
+      log.info(
+        "Preloading " +
+        customerRepository.save(
+          new Customer(
+            "Faceboook",
+            "1 Hacker Way, Menlo Park, California 94025",
+            "USA",
+            new Contact("Mark Zuckerberg", "1234", "Mark Zuckerberg", "CEO")
+          )
+        )
+      );
     };
   }
 }
