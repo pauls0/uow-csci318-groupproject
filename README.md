@@ -1150,7 +1150,7 @@ curl -X GET http://localhost:8183/brand/[product_id]/quantity
 
 <br/>
 
-**EXAMPLE:** Return product with id `1`
+**EXAMPLE:** Return total order quantity of product with id `1`
 
 ```bash
 curl -X GET http://localhost:8183/brand/1/quantity
