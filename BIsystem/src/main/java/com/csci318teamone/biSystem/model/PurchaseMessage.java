@@ -1,30 +1,16 @@
-package com.csci318teamone.purchaseSystem.entities;
+package com.csci318teamone.biSystem.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import javax.persistence.*;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Entity
 public class PurchaseMessage {
 
-  @Id
   private int id;
-
   private String product;
   private String customer;
   private String total;
 
-  public PurchaseMessage(
-    int id,
-    String product,
-    String customer,
-    String total
-  ) {
-    this.id = id;
-    this.product = product; //product
-    this.customer = customer; //customer
-    this.total = total;
-  }
+  public PurchaseMessage() {}
 
   public int getId() {
     return id;
@@ -34,11 +20,11 @@ public class PurchaseMessage {
     this.id = id;
   }
 
-  public String getproduct() {
+  public String getProduct() {
     return product;
   }
 
-  public void setproduct(String product) {
+  public void setProduct(String product) {
     this.product = product;
   }
 
@@ -62,17 +48,15 @@ public class PurchaseMessage {
   public String toString() {
     return (
       "PurchaseMessage{" +
-      "id=" +
+      "id='" +
       id +
-      ", product='" +
+      '\'' +
+      ", product=" +
       product +
-      '\'' +
-      ", customer='" +
+      ", customer=" +
       customer +
-      '\'' +
-      ", total='" +
+      ", total=" +
       total +
-      '\'' +
       '}'
     );
   }
