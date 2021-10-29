@@ -6,6 +6,7 @@ import com.csci318teamone.purchaseSystem.entities.Product;
 import com.csci318teamone.purchaseSystem.entities.ProductDetail;
 import com.csci318teamone.purchaseSystem.entities.Purchase;
 import com.csci318teamone.purchaseSystem.entities.PurchaseEvent;
+import com.csci318teamone.purchaseSystem.entities.PurchaseMessage;
 import com.csci318teamone.purchaseSystem.entities.PurchaseTemplate;
 import com.csci318teamone.purchaseSystem.exception.PurchaseNotAllowedException;
 import com.csci318teamone.purchaseSystem.exception.PurchaseNotFoundException;
@@ -13,6 +14,7 @@ import com.csci318teamone.purchaseSystem.repositories.PurchaseEventRepository;
 import com.csci318teamone.purchaseSystem.repositories.PurchaseRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,9 @@ public class PurchaseServiceImpl implements PurchaseService {
   public void PurchaseService(ApplicationEventPublisher publisher) {
     this.publisher = publisher;
   }
+
+  @Autowired
+  private StreamBridge streamBridge;
 
   @Autowired
   private WebClient.Builder webClientBuilder;
@@ -129,6 +134,16 @@ public class PurchaseServiceImpl implements PurchaseService {
       throw new PurchaseNotAllowedException("Not enough stock");
     } else {
       recordPurchase(purchase);
+
+      // publish to kafka
+      PurchaseMessage purchaseMessage = new PurchaseMessage(
+        0, // TODO: implement id
+        purchaseTemplate.getProductID().toString(),
+        purchaseTemplate.getCustomerID().toString(),
+        "0" // TODO: implment order total cost
+      );
+      streamBridge.send("orderevent-outbound", purchaseMessage);
+      System.out.println("published to kafka: " + purchaseMessage.toString());
       return purchase;
     }
   }

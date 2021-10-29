@@ -9,9 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.StreamingHttpOutputMessage.Body;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -70,7 +68,6 @@ public class PurchaseEventHandler {
 
     updatedProduct.setStockQuantity(newQuantity);
 
-    // Product responseProduct = webClientBuilder
     webClientBuilder
       .build()
       .put()
@@ -83,8 +80,6 @@ public class PurchaseEventHandler {
       )
       .bodyToMono(Product.class)
       .block();
-    // log.info("Updated product record: " + updatedProduct.toJSONString());
-    // log.info("Updated product record response: " + presp);
 
     purchaseEventRepository.save(purchaseEvent);
   }
