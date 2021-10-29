@@ -1143,23 +1143,21 @@ curl -X GET http://localhost:8080/purchases/1
 #### Use Case 10: Generate the total order quantity per product
 
 ```bash
-echo 'some command';
+curl -X GET http://localhost:8183/product/[product_id]/quantity
 ```
 
-- where `p` is the product-id
+- where `product_id` is the id of the product
 
 <br/>
 
-**EXAMPLE:** Return total order quantity for product with id `1`
+**EXAMPLE:** Return total order quantity of product with id `1`
 
 ```bash
-echo 'some command';
+curl -X GET http://localhost:8183/product/1/quantity
 ```
 
 ```JSON
-{
-"some": "JSON"
-}
+6
 ```
 
 ---
