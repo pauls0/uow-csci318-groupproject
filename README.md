@@ -1167,8 +1167,7 @@ curl -X GET http://localhost:8183/brand/1/quantity
 #### Use Case 11: Look up a list of products and the total order value for a customer
 
 ```bash
-curl -X GET http://localhost:8183/brand/1/quantity
-6
+echo 'some command';
 ```
 
 - where `c` is the customer-id
