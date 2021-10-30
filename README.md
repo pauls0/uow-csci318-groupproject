@@ -46,18 +46,32 @@ Online Ordering Application using a microservices architecture in Java Spring Bo
 
 ### 1. An introduction to the product
 
-Is this my espresso machine? Wh-what is-h-how did you get my espresso machine? Must go faster... go, go, go, go, go! Yeah, but your scientists were so preoccupied with whether or not they could, they didn't stop to think if they should. Life finds a way.
+Online Ordering Application using a microservices architecture in Java Spring Boot.
 
 ---
 
 <a name="system-documentation-2"></a>
 
 ### 2. How to set up and run application
+#### Setup
+1. download kafka `curl https://archive.apache.org/dist/kafka/2.8.1/kafka_2.13-2.8.1.tgz -o kafka_2.13-2.8.1.tgz && tar zxvf kafka_2.13-2.8.1.tgz;`
+2. build customer service `cd ./customerSystem;./mvnw package -f "pom.xml";`
+3. build product service `cd ./productSystem;./mvnw package -f "pom.xml";`
+4. build purchase service `cd ./purchaseSystem;./mvnw package -f "pom.xml";`
+5. build bi service `cd ./biSystem;./mvnw package -f "pom.xml";`
+6. build gateway service `cd ./gateway;./mvnw package -f "pom.xml";`
 
-Build: `./build.sh`
-Run: `./run.sh`
+#### Run
+1. run zookeeper `./kafka_2.13-2.8.1/bin/zookeeper-server-start.sh ./kafka_2.13-2.8.1/config/zookeeper.properties`
+2. run kafka `./kafka_2.13-2.8.1/bin/kafka-server-start.sh ./kafka_2.13-2.8.1/config/server.properties`
+3. run customer service `java -jar ./customerSystem/target/customerSystem-3.0.0.jar`
+4. run product service `java -jar ./productSystem/target/productSystem-3.0.0.jar`
+5. run purchase service `java -jar ./purchaseSystem/target/purchaseSystem-3.0.0.jar`
+6. run bi service `./biSystem/target/biSystem-3.0.0.jar`
+7. run shell script `./make-constant-purchases.sh`
 
-- Honcho required as a dependency. To install: `pip install honcho;`
+- Java 8 required as a dependency.
+- Shell script requires unix terminal or WSL as dependancy.
 
 ---
 
@@ -1167,21 +1181,37 @@ curl -X GET http://localhost:8183/product/1/quantity
 #### Use Case 11: Look up a list of products and the total order value for a customer
 
 ```bash
-echo 'some command';
+curl -X GET /bi/customers/{customerId}/products
 ```
 
-- where `c` is the customer-id
+- where `customerId` is the id of the customer
 
 <br/>
 
-**EXAMPLE:** Return list of products and the total order value customer with id `1`
+**EXAMPLE:** Return total order quantity of product with id `1`
 
 ```bash
-echo 'some command';
+curl -X GET /bi/customers/1/products
 ```
 
 ```JSON
-{
-"some": "JSON"
-}
+[1,3,5]
+```
+
+```bash
+curl -X GET /bi/customers/{customerId}/total
+```
+
+- where `customerId` is the id of the customer
+
+<br/>
+
+**EXAMPLE:** Return total order quantity of customerId with id `1`
+
+```bash
+curl -X GET /bi/customers/{customerId}/total
+```
+
+```JSON
+[150.00]
 ```
