@@ -1,4 +1,4 @@
-# csciXXX Project
+# csci318 Group Project
 <img src="https://img.shields.io/badge/Java-grey?logo=java&logoColor=white" alt="Java logo" height="25" /> &nbsp;
 <img src="https://img.shields.io/badge/Spring Boot-grey?logo=springboot&logoColor=white" alt="Spring Boot logo" height="25" />&nbsp;
 <img src="https://img.shields.io/badge/Apache Maven-grey?logo=apachemaven&logoColor=white" alt="Apache Maven logo" height="25" />&nbsp;
